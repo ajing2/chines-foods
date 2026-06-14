@@ -1,6 +1,7 @@
 ---
 title: "麻婆豆腐 — 一位满脸麻子的老板娘创造的川菜传奇"
 description: "正宗川式麻婆豆腐做法，含陈麻婆历史典故、麻辣哲学解读、家常版详细步骤。豆腐嫩滑入味，麻辣鲜香烫，15分钟搞定的国民下饭菜。"
+typora-root-url: ../../../public
 pubDate: 2024-06-15
 heroImage: "/images/recipes/mapo-tofu/step7-final-garnish.jpg"
 category: "川菜"
