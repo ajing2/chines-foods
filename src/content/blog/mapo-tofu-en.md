@@ -2,7 +2,7 @@
 title: "Mapo Tofu — The Pockmarked Grandma Who Invented China's Most Addictive Comfort Food"
 description: "Authentic Sichuan Mapo Tofu recipe with the fascinating origin story of Chen Mapo, step-by-step instructions, and tips for the perfect numbing-spicy sauce. Ready in 15 minutes."
 pubDate: 2024-06-15
-heroImage: "/images/recipes/mapo-tofu/hero.jpg"
+heroImage: "/images/recipes/mapo-tofu/step7-final-garnish.jpg"
 category: "川菜"
 cookTime: "10 min"
 prepTime: "5 min"
@@ -27,7 +27,7 @@ The name "Mapo Tofu" literally translates to "pockmarked grandma's tofu" — not
 
 Around 1862, during the Qing Dynasty's Tongzhi era, a small eatery stood beside Wanfu Bridge on the northern outskirts of Chengdu. The owner was a woman surnamed Chen, whose face bore a few pockmarks — so the locals called her "Chen Mapo" (Pockmarked Grandma Chen). Wanfu Bridge was a busy thoroughfare where oil porters and tofu vendors passed daily. These laborers earned little but needed high-calorie meals to fuel their grueling work.
 
-Chen Mapo had a brilliant idea: the porters brought their own cooking oil and tofu, and she would provide the seasoning and the fire. She braised the tofu with doubanjiang (chili bean paste), Sichuan peppercorns, and chili flakes until it was numbingly spicy and piping hot, then drizzled it with red chili oil. This dirt-cheap yet explosively flavorful bowl of tofu over rice became the perfect working-class lunch.
+Chen Mapo had a brilliant idea: the porters brought their own cooking oil and tofu, and she would provide the seasoning and the fire. She braised the tofu with doubanjiang (chili bean paste), Sichuan peppercorns, and chili flakes until it was numbingly spicy and piping hot, then drizzled it with red chili oil — this dirt-cheap yet explosively flavorful bowl of tofu over rice became the perfect working-class lunch.
 
 Word spread like wildfire through Chengdu. Diners praised it with eight characters that became the gold standard for judging Mapo Tofu: **má (numbing), là (spicy), tàng (piping hot), xiāng (aromatic), sū (crispy meat), nèn (silky tofu), xiān (savory), huó (lively)**. Think of it as China's answer to mac and cheese — pure comfort food born from necessity, elevated by genius seasoning.
 
@@ -73,29 +73,47 @@ In 1909, the dish was formally documented in *Chengdu Tonglan* (成都通览), c
 
 ## 👨‍🍳 Instructions
 
-### Step 1: Blanch the Tofu
+### Step 1: Cut the Tofu
+
+Remove the tofu from its package and cut into ¾-inch (2cm) cubes. Use a sharp knife and gentle hands to avoid crumbling. Arrange the cubes neatly and set aside.
+
+![Cutting tofu into cubes](/images/recipes/mapo-tofu/step1-cut-tofu.jpg)
+
+### Step 2: Blanch the Tofu
 
 Bring a pot of water to a gentle boil and add ½ teaspoon salt. Carefully slide in the tofu cubes and simmer for 2 minutes. This crucial step removes the raw bean flavor and firms up the tofu so it won't crumble during cooking. Drain gently and set aside.
 
-### Step 2: Crisp Up the Meat
+![Blanching tofu in salted water](/images/recipes/mapo-tofu/step2-blanch-tofu.jpg)
+
+### Step 3: Crisp Up the Meat
 
 Heat oil in a wok over medium-high heat. Add the ground beef and stir-fry until browned and slightly crispy, about 2 minutes. You want the meat to develop a golden crunch — this delivers the "sū" (crispy) element, one of the eight hallmarks of great Mapo Tofu.
 
-### Step 3: Build the Flavor Base
+![Stir-frying ground meat until crispy](/images/recipes/mapo-tofu/step3-fry-meat.jpg)
+
+### Step 4: Build the Flavor Base
 
 Push the meat to one side. In the oily area, add the minced doubanjiang and fry on low heat for 30 seconds until the oil turns a gorgeous deep red — this is called "chao chu hong you" (frying out the red oil). Add the douchi, ginger, garlic, and scallion whites; stir for 20 seconds until fragrant. Keep the heat low: too high and the paste turns bitter.
 
-### Step 4: Simmer the Tofu
+![Frying doubanjiang to release red oil](/images/recipes/mapo-tofu/step4-fry-doubanjiang.jpg)
+
+### Step 5: Simmer the Tofu
 
 Pour in the stock, soy sauce, Shaoxing wine, and chili flakes. Bring to a boil, then reduce to medium-low. Gently slide in the blanched tofu — don't stir with a spatula! Instead, gently shake the wok to move the tofu around. Simmer for 3-4 minutes so the tofu absorbs the fiery sauce.
 
-### Step 5: Thicken the Sauce
+![Tofu simmering in spicy sauce](/images/recipes/mapo-tofu/step5-simmer-tofu.jpg)
+
+### Step 6: Thicken the Sauce
 
 Drizzle the cornstarch slurry around the edges of the wok. Gently swirl the pan to distribute evenly. The sauce should become glossy and coat each tofu cube like a spicy glaze. This "locks in" the flavor on every surface.
 
-### Step 6: Finish with Sichuan Peppercorn
+![Adding cornstarch slurry to thicken the sauce](/images/recipes/mapo-tofu/step6-thicken-sauce.jpg)
+
+### Step 7: Finish with Sichuan Peppercorn
 
 Transfer to a serving bowl. Sprinkle freshly ground Sichuan peppercorn and scallion greens on top. The peppercorn MUST go on last — heat destroys its signature numbing compound (hydroxy-alpha-sanshool), so adding it at the end preserves that electric tingle on your tongue.
+
+![Final dish garnished with Sichuan peppercorn and scallions](/images/recipes/mapo-tofu/step7-final-garnish.jpg)
 
 ---
 
