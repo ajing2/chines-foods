@@ -18,6 +18,14 @@ import { SITE_TITLE, SITE_AUTHOR } from '../consts';
       h1 { margin-bottom: 0.5em; }
       h2 { margin-top: 1.5em; }
       p { line-height: 1.8; color: rgb(var(--gray-dark)); }
+      .contact-email {
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .contact-email:hover {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
@@ -28,45 +36,64 @@ import { SITE_TITLE, SITE_AUTHOR } from '../consts';
         欢迎来到「中餐食谱」！这里收录了各大菜系的经典菜肴，每道菜都配有详细的食材清单和步骤说明，
         让你在家也能做出地道的中国味道。
       </p>
+      <p id="about-site-detail">
+        本站致力于传播中华饮食文化，每道食谱不仅包含详尽的烹饪步骤，还融入了菜品背后的历史典故与文化故事。
+        我们提供中文、英文、日文、法文、德文五种语言版本，希望让全世界的美食爱好者都能领略中餐的魅力。
+      </p>
       <h2 id="about-author-title">关于作者</h2>
       <p id="about-author-desc">
         我是 {SITE_AUTHOR}，热爱烹饪和记录美食。如果你有任何问题或想分享你的做法，欢迎联系我。
+      </p>
+      <p id="about-contact">
+        邮箱：<a class="contact-email" href="mailto:lingajing2@gmail.com">lingajing2@gmail.com</a>
       </p>
     </main>
     <Footer />
 
     <script is:inline define:vars={{ SITE_AUTHOR }}>
     (function() {
+      var EMAIL = 'lingajing2@gmail.com';
+
       var ABOUT_I18N = {
         zh: {
           title: '关于本站',
           intro: '欢迎来到「中餐食谱」！这里收录了各大菜系的经典菜肴，每道菜都配有详细的食材清单和步骤说明，让你在家也能做出地道的中国味道。',
+          siteDetail: '本站致力于传播中华饮食文化，每道食谱不仅包含详尽的烹饪步骤，还融入了菜品背后的历史典故与文化故事。我们提供中文、英文、日文、法文、德文五种语言版本，希望让全世界的美食爱好者都能领略中餐的魅力。',
           authorTitle: '关于作者',
-          authorDesc: '我是 ' + SITE_AUTHOR + '，热爱烹饪和记录美食。如果你有任何问题或想分享你的做法，欢迎联系我。'
+          authorDesc: '我是 ' + SITE_AUTHOR + '，热爱烹饪和记录美食。如果你有任何问题或想分享你的做法，欢迎联系我。',
+          contact: '邮箱：'
         },
         en: {
           title: 'About This Site',
           intro: 'Welcome to "Chinese Recipes"! Here you\'ll find classic dishes from all major Chinese cuisines, each with detailed ingredient lists and step-by-step instructions, so you can recreate authentic Chinese flavors at home.',
+          siteDetail: 'This site is dedicated to sharing Chinese culinary culture. Each recipe includes not only thorough cooking instructions but also the historical stories and cultural background behind the dish. We offer content in five languages — Chinese, English, Japanese, French, and German — hoping to bring the charm of Chinese cuisine to food lovers around the world.',
           authorTitle: 'About the Author',
-          authorDesc: 'I\'m ' + SITE_AUTHOR + ', passionate about cooking and documenting food. If you have any questions or want to share your own approach, feel free to reach out.'
+          authorDesc: 'I\'m ' + SITE_AUTHOR + ', passionate about cooking and documenting food. If you have any questions or want to share your own approach, feel free to reach out.',
+          contact: 'Email: '
         },
         ja: {
           title: 'このサイトについて',
           intro: '「中華レシピ」へようこそ！ここでは中国各地の名菜を収録しており、各料理には詳しい材料リストと手順が付いています。ご家庭でも本格的な中国の味を再現できます。',
+          siteDetail: '本サイトは中華食文化の発信に力を入れています。各レシピには詳細な調理手順だけでなく、料理の背景にある歴史や文化の物語も盛り込んでいます。中国語・英語・日本語・フランス語・ドイツ語の5言語で提供し、世界中のグルメ愛好家に中華料理の魅力をお届けします。',
           authorTitle: '著者について',
-          authorDesc: '私は' + SITE_AUTHOR + 'です。料理と美食の記録が大好きです。ご質問やあなたのレシピを共有したい場合は、お気軽にご連絡ください。'
+          authorDesc: '私は' + SITE_AUTHOR + 'です。料理と美食の記録が大好きです。ご質問やあなたのレシピを共有したい場合は、お気軽にご連絡ください。',
+          contact: 'メール：'
         },
         fr: {
           title: 'À propos de ce site',
           intro: 'Bienvenue sur « Recettes Chinoises » ! Vous trouverez ici des plats classiques de toutes les grandes cuisines chinoises, chacun accompagné d\'une liste détaillée d\'ingrédients et d\'instructions étape par étape, pour recréer les saveurs authentiques de la Chine chez vous.',
+          siteDetail: 'Ce site est dédié à la diffusion de la culture culinaire chinoise. Chaque recette comprend non seulement des instructions de cuisson détaillées, mais aussi les histoires et le contexte culturel derrière chaque plat. Nous proposons du contenu en cinq langues — chinois, anglais, japonais, français et allemand — dans l\'espoir de faire découvrir le charme de la cuisine chinoise aux gourmets du monde entier.',
           authorTitle: 'À propos de l\'auteur',
-          authorDesc: 'Je suis ' + SITE_AUTHOR + ', passionné(e) de cuisine et de documentation culinaire. Si vous avez des questions ou souhaitez partager votre propre approche, n\'hésitez pas à me contacter.'
+          authorDesc: 'Je suis ' + SITE_AUTHOR + ', passionné(e) de cuisine et de documentation culinaire. Si vous avez des questions ou souhaitez partager votre propre approche, n\'hésitez pas à me contacter.',
+          contact: 'E-mail : '
         },
         de: {
           title: 'Über diese Seite',
           intro: 'Willkommen bei „Chinesische Rezepte"! Hier finden Sie klassische Gerichte aus allen großen chinesischen Küchen, jeweils mit detaillierten Zutatenlisten und Schritt-für-Schritt-Anleitungen, damit Sie authentische chinesische Aromen zu Hause nachkochen können.',
+          siteDetail: 'Diese Seite widmet sich der Verbreitung der chinesischen Esskultur. Jedes Rezept enthält nicht nur ausführliche Kochanleitungen, sondern auch die historischen Geschichten und den kulturellen Hintergrund hinter jedem Gericht. Wir bieten Inhalte in fünf Sprachen — Chinesisch, Englisch, Japanisch, Französisch und Deutsch — und hoffen, Feinschmeckern weltweit den Charme der chinesischen Küche näherzubringen.',
           authorTitle: 'Über den Autor',
-          authorDesc: 'Ich bin ' + SITE_AUTHOR + ', leidenschaftlich fürs Kochen und das Dokumentieren von Essen. Bei Fragen oder wenn Sie Ihre eigene Herangehensweise teilen möchten, kontaktieren Sie mich gerne.'
+          authorDesc: 'Ich bin ' + SITE_AUTHOR + ', leidenschaftlich fürs Kochen und das Dokumentieren von Essen. Bei Fragen oder wenn Sie Ihre eigene Herangehensweise teilen möchten, kontaktieren Sie mich gerne.',
+          contact: 'E-Mail: '
         }
       };
 
@@ -86,13 +113,17 @@ import { SITE_TITLE, SITE_AUTHOR } from '../consts';
 
         var titleEl = document.getElementById('about-title');
         var introEl = document.getElementById('about-intro');
+        var siteDetailEl = document.getElementById('about-site-detail');
         var authorTitleEl = document.getElementById('about-author-title');
         var authorDescEl = document.getElementById('about-author-desc');
+        var contactEl = document.getElementById('about-contact');
 
         if (titleEl) titleEl.textContent = strings.title;
         if (introEl) introEl.textContent = strings.intro;
+        if (siteDetailEl) siteDetailEl.textContent = strings.siteDetail;
         if (authorTitleEl) authorTitleEl.textContent = strings.authorTitle;
         if (authorDescEl) authorDescEl.textContent = strings.authorDesc;
+        if (contactEl) contactEl.innerHTML = strings.contact + '<a class="contact-email" href="mailto:' + EMAIL + '">' + EMAIL + '</a>';
 
         document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
       }
