@@ -120,15 +120,15 @@ const allPosts = (await getCollection('blog'))
       <p class="page-subtitle" id="blog-subtitle">共 {allPosts.length} 道菜</p>
       <ul class="posts-list" id="posts-list">
         {allPosts.map((post) => (
-          <li class="post-item" data-post-lang={post.data.lang || 'zh'}>
+          <li class="post-item" data-post-lang={post.data.lang || 'zh'} data-category={post.data.category} data-difficulty={post.data.difficulty}>
             <a href={`/blog/${post.id}/`}>
               {post.data.heroImage && (
                 <img src={post.data.heroImage} alt={post.data.title} />
               )}
               <div class="item-body">
                 <div class="item-meta">
-                  <span class="category-badge">{post.data.category}</span>
-                  <span class="difficulty-badge">{post.data.difficulty}</span>
+                  <span class="category-badge" data-translate="category">{post.data.category}</span>
+                  <span class="difficulty-badge" data-translate="difficulty">{post.data.difficulty}</span>
                   <span class="lang-badge">{
                     (post.data.lang || 'zh') === 'zh' ? '\u{1F1E8}\u{1F1F3} \u4E2D\u6587' :
                     (post.data.lang || 'zh') === 'en' ? '\u{1F1FA}\u{1F1F8} EN' :
@@ -161,6 +161,22 @@ const allPosts = (await getCollection('blog'))
         de: { title: 'Alle Rezepte', subtitle: function(n) { return n + ' Rezepte'; } }
       };
 
+      var CATEGORY_I18N = {
+        zh: { '\u5DDD\u83DC': '\u5DDD\u83DC', '\u7CA4\u83DC': '\u7CA4\u83DC', '\u9C81\u83DC': '\u9C81\u83DC', '\u6E58\u83DC': '\u6E58\u83DC', '\u82CF\u83DC': '\u82CF\u83DC', '\u95FD\u83DC': '\u95FD\u83DC', '\u6D59\u83DC': '\u6D59\u83DC', '\u5FBD\u83DC': '\u5FBD\u83DC' },
+        en: { '\u5DDD\u83DC': 'Sichuan', '\u7CA4\u83DC': 'Cantonese', '\u9C81\u83DC': 'Shandong', '\u6E58\u83DC': 'Hunan', '\u82CF\u83DC': 'Jiangsu', '\u95FD\u83DC': 'Fujian', '\u6D59\u83DC': 'Zhejiang', '\u5FBD\u83DC': 'Anhui' },
+        ja: { '\u5DDD\u83DC': '\u56DB\u5DDD\u6599\u7406', '\u7CA4\u83DC': '\u5E83\u6771\u6599\u7406', '\u9C81\u83DC': '\u5C71\u6771\u6599\u7406', '\u6E58\u83DC': '\u6E56\u5357\u6599\u7406', '\u82CF\u83DC': '\u6C5F\u8607\u6599\u7406', '\u95FD\u83DC': '\u798F\u5EFA\u6599\u7406', '\u6D59\u83DC': '\u6D59\u6C5F\u6599\u7406', '\u5FBD\u83DC': '\u5B89\u5FBD\u6599\u7406' },
+        fr: { '\u5DDD\u83DC': 'Sichuan', '\u7CA4\u83DC': 'Cantonais', '\u9C81\u83DC': 'Shandong', '\u6E58\u83DC': 'Hunan', '\u82CF\u83DC': 'Jiangsu', '\u95FD\u83DC': 'Fujian', '\u6D59\u83DC': 'Zhejiang', '\u5FBD\u83DC': 'Anhui' },
+        de: { '\u5DDD\u83DC': 'Sichuan', '\u7CA4\u83DC': 'Kantonesisch', '\u9C81\u83DC': 'Shandong', '\u6E58\u83DC': 'Hunan', '\u82CF\u83DC': 'Jiangsu', '\u95FD\u83DC': 'Fujian', '\u6D59\u83DC': 'Zhejiang', '\u5FBD\u83DC': 'Anhui' }
+      };
+
+      var DIFFICULTY_I18N = {
+        zh: { '\u7B80\u5355': '\u7B80\u5355', '\u4E2D\u7B49': '\u4E2D\u7B49', '\u56F0\u96BE': '\u56F0\u96BE' },
+        en: { '\u7B80\u5355': 'Easy', '\u4E2D\u7B49': 'Medium', '\u56F0\u96BE': 'Hard' },
+        ja: { '\u7B80\u5355': '\u7C21\u5358', '\u4E2D\u7B49': '\u666E\u901A', '\u56F0\u96BE': '\u96E3\u3057\u3044' },
+        fr: { '\u7B80\u5355': 'Facile', '\u4E2D\u7B49': 'Moyen', '\u56F0\u96BE': 'Difficile' },
+        de: { '\u7B80\u5355': 'Einfach', '\u4E2D\u7B49': 'Mittel', '\u56F0\u96BE': 'Schwer' }
+      };
+
       var SUPPORTED = ['zh', 'en', 'ja', 'fr', 'de'];
 
       function getLang() {
@@ -175,7 +191,10 @@ const allPosts = (await getCollection('blog'))
         var strings = BLOG_STRINGS[lang];
         if (!strings) return;
 
-        // Filter posts
+        var catMap = CATEGORY_I18N[lang] || {};
+        var diffMap = DIFFICULTY_I18N[lang] || {};
+
+        // Filter posts and translate badges
         var items = document.querySelectorAll('.post-item');
         var count = 0;
         for (var i = 0; i < items.length; i++) {
@@ -184,6 +203,14 @@ const allPosts = (await getCollection('blog'))
             items[i].setAttribute('data-hidden', 'false');
             items[i].style.display = '';
             count++;
+
+            // Translate category and difficulty badges
+            var catBadge = items[i].querySelector('[data-translate="category"]');
+            var diffBadge = items[i].querySelector('[data-translate="difficulty"]');
+            var rawCat = items[i].getAttribute('data-category');
+            var rawDiff = items[i].getAttribute('data-difficulty');
+            if (catBadge && rawCat) catBadge.textContent = catMap[rawCat] || rawCat;
+            if (diffBadge && rawDiff) diffBadge.textContent = diffMap[rawDiff] || rawDiff;
           } else {
             items[i].setAttribute('data-hidden', 'true');
             items[i].style.display = 'none';

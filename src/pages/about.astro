@@ -9,20 +9,104 @@ import { SITE_TITLE, SITE_AUTHOR } from '../consts';
 <html lang="zh-CN">
   <head>
     <BaseHead title={`关于 | ${SITE_TITLE}`} description="关于这个中餐食谱博客" />
+    <style>
+      main {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 2em 1em;
+      }
+      h1 { margin-bottom: 0.5em; }
+      h2 { margin-top: 1.5em; }
+      p { line-height: 1.8; color: rgb(var(--gray-dark)); }
+    </style>
   </head>
   <body>
     <Header />
     <main>
-      <h1>关于本站</h1>
-      <p>
+      <h1 id="about-title">关于本站</h1>
+      <p id="about-intro">
         欢迎来到「中餐食谱」！这里收录了各大菜系的经典菜肴，每道菜都配有详细的食材清单和步骤说明，
         让你在家也能做出地道的中国味道。
       </p>
-      <h2>关于作者</h2>
-      <p>
+      <h2 id="about-author-title">关于作者</h2>
+      <p id="about-author-desc">
         我是 {SITE_AUTHOR}，热爱烹饪和记录美食。如果你有任何问题或想分享你的做法，欢迎联系我。
       </p>
     </main>
     <Footer />
+
+    <script is:inline define:vars={{ SITE_AUTHOR }}>
+    (function() {
+      var ABOUT_I18N = {
+        zh: {
+          title: '关于本站',
+          intro: '欢迎来到「中餐食谱」！这里收录了各大菜系的经典菜肴，每道菜都配有详细的食材清单和步骤说明，让你在家也能做出地道的中国味道。',
+          authorTitle: '关于作者',
+          authorDesc: '我是 ' + SITE_AUTHOR + '，热爱烹饪和记录美食。如果你有任何问题或想分享你的做法，欢迎联系我。'
+        },
+        en: {
+          title: 'About This Site',
+          intro: 'Welcome to "Chinese Recipes"! Here you\'ll find classic dishes from all major Chinese cuisines, each with detailed ingredient lists and step-by-step instructions, so you can recreate authentic Chinese flavors at home.',
+          authorTitle: 'About the Author',
+          authorDesc: 'I\'m ' + SITE_AUTHOR + ', passionate about cooking and documenting food. If you have any questions or want to share your own approach, feel free to reach out.'
+        },
+        ja: {
+          title: 'このサイトについて',
+          intro: '「中華レシピ」へようこそ！ここでは中国各地の名菜を収録しており、各料理には詳しい材料リストと手順が付いています。ご家庭でも本格的な中国の味を再現できます。',
+          authorTitle: '著者について',
+          authorDesc: '私は' + SITE_AUTHOR + 'です。料理と美食の記録が大好きです。ご質問やあなたのレシピを共有したい場合は、お気軽にご連絡ください。'
+        },
+        fr: {
+          title: 'À propos de ce site',
+          intro: 'Bienvenue sur « Recettes Chinoises » ! Vous trouverez ici des plats classiques de toutes les grandes cuisines chinoises, chacun accompagné d\'une liste détaillée d\'ingrédients et d\'instructions étape par étape, pour recréer les saveurs authentiques de la Chine chez vous.',
+          authorTitle: 'À propos de l\'auteur',
+          authorDesc: 'Je suis ' + SITE_AUTHOR + ', passionné(e) de cuisine et de documentation culinaire. Si vous avez des questions ou souhaitez partager votre propre approche, n\'hésitez pas à me contacter.'
+        },
+        de: {
+          title: 'Über diese Seite',
+          intro: 'Willkommen bei „Chinesische Rezepte"! Hier finden Sie klassische Gerichte aus allen großen chinesischen Küchen, jeweils mit detaillierten Zutatenlisten und Schritt-für-Schritt-Anleitungen, damit Sie authentische chinesische Aromen zu Hause nachkochen können.',
+          authorTitle: 'Über den Autor',
+          authorDesc: 'Ich bin ' + SITE_AUTHOR + ', leidenschaftlich fürs Kochen und das Dokumentieren von Essen. Bei Fragen oder wenn Sie Ihre eigene Herangehensweise teilen möchten, kontaktieren Sie mich gerne.'
+        }
+      };
+
+      var SUPPORTED = ['zh', 'en', 'ja', 'fr', 'de'];
+
+      function getLang() {
+        try {
+          var stored = localStorage.getItem('site-lang');
+          if (stored && SUPPORTED.indexOf(stored) !== -1) return stored;
+        } catch(e) {}
+        return 'zh';
+      }
+
+      function applyAboutLang(lang) {
+        var strings = ABOUT_I18N[lang];
+        if (!strings) return;
+
+        var titleEl = document.getElementById('about-title');
+        var introEl = document.getElementById('about-intro');
+        var authorTitleEl = document.getElementById('about-author-title');
+        var authorDescEl = document.getElementById('about-author-desc');
+
+        if (titleEl) titleEl.textContent = strings.title;
+        if (introEl) introEl.textContent = strings.intro;
+        if (authorTitleEl) authorTitleEl.textContent = strings.authorTitle;
+        if (authorDescEl) authorDescEl.textContent = strings.authorDesc;
+
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { applyAboutLang(getLang()); });
+      } else {
+        applyAboutLang(getLang());
+      }
+
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'site-lang') applyAboutLang(getLang());
+      });
+    })();
+    </script>
   </body>
 </html>

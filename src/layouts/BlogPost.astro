@@ -125,7 +125,7 @@ const {
                 <FormattedDate date={pubDate} />
                 {updatedDate && (
                   <div class="last-updated-on">
-                    更新于 <FormattedDate date={updatedDate} />
+                    <span data-i18n-key="updatedAt"></span> <FormattedDate date={updatedDate} />
                   </div>
                 )}
               </div>
@@ -133,8 +133,8 @@ const {
             </div>
             <!-- 食谱专属：菜系 + 难度徽章 -->
             <div class="recipe-badges">
-              <span class="category-badge">{category}</span>
-              <span class="difficulty-badge">难度：{difficulty}</span>
+              <span class="category-badge" data-i18n-key="category" data-raw-value={category}>{category}</span>
+              <span class="difficulty-badge"><span data-i18n-key="difficultyLabel"></span><span data-i18n-key="difficulty" data-raw-value={difficulty}></span></span>
             </div>
             <h1>{title}</h1>
             <hr />
@@ -145,19 +145,19 @@ const {
             <div class="recipe-meta">
               {prepTime && (
                 <div class="recipe-meta-item">
-                  <span class="label">准备时间</span>
+                  <span class="label" data-i18n-key="prepTime"></span>
                   <span class="value">{prepTime}</span>
                 </div>
               )}
               {cookTime && (
                 <div class="recipe-meta-item">
-                  <span class="label">烹饪时间</span>
+                  <span class="label" data-i18n-key="cookTime"></span>
                   <span class="value">{cookTime}</span>
                 </div>
               )}
               {servings && (
                 <div class="recipe-meta-item">
-                  <span class="label">份量</span>
+                  <span class="label" data-i18n-key="servings"></span>
                   <span class="value">{servings}</span>
                 </div>
               )}
@@ -170,16 +170,67 @@ const {
     </main>
     <Footer />
 
-    <!-- Auto-redirect to correct language version if global lang differs -->
+    <!-- i18n for recipe labels + auto-redirect -->
     <script is:inline define:vars={{ lang }}>
       (function() {
         var SUPPORTED = ['zh', 'en', 'ja', 'fr', 'de'];
         var currentLang = lang;
+
+        // i18n strings for recipe detail page
+        var RECIPE_I18N = {
+          zh: { prepTime: '准备时间', cookTime: '烹饪时间', servings: '份量', difficultyLabel: '难度：', updatedAt: '更新于',
+                category: { '川菜': '川菜', '粤菜': '粤菜', '鲁菜': '鲁菜', '湘菜': '湘菜', '苏菜': '苏菜', '闽菜': '闽菜', '浙菜': '浙菜', '徽菜': '徽菜' },
+                difficulty: { '简单': '简单', '中等': '中等', '困难': '困难' }
+          },
+          en: { prepTime: 'Prep Time', cookTime: 'Cook Time', servings: 'Servings', difficultyLabel: 'Difficulty: ', updatedAt: 'Updated on',
+                category: { '川菜': 'Sichuan', '粤菜': 'Cantonese', '鲁菜': 'Shandong', '湘菜': 'Hunan', '苏菜': 'Jiangsu', '闽菜': 'Fujian', '浙菜': 'Zhejiang', '徽菜': 'Anhui' },
+                difficulty: { '简单': 'Easy', '中等': 'Medium', '困难': 'Hard' }
+          },
+          ja: { prepTime: '下準備', cookTime: '調理時間', servings: '分量', difficultyLabel: '難易度：', updatedAt: '更新日',
+                category: { '川菜': '四川料理', '粤菜': '広東料理', '鲁菜': '山東料理', '湘菜': '湖南料理', '苏菜': '江蘇料理', '闽菜': '福建料理', '浙菜': '浙江料理', '徽菜': '安徽料理' },
+                difficulty: { '简单': '簡単', '中等': '普通', '困难': '難しい' }
+          },
+          fr: { prepTime: 'Préparation', cookTime: 'Cuisson', servings: 'Portions', difficultyLabel: 'Difficulté : ', updatedAt: 'Mis à jour le',
+                category: { '川菜': 'Sichuan', '粤菜': 'Cantonais', '鲁菜': 'Shandong', '湘菜': 'Hunan', '苏菜': 'Jiangsu', '闽菜': 'Fujian', '浙菜': 'Zhejiang', '徽菜': 'Anhui' },
+                difficulty: { '简单': 'Facile', '中等': 'Moyen', '困难': 'Difficile' }
+          },
+          de: { prepTime: 'Vorbereitung', cookTime: 'Kochzeit', servings: 'Portionen', difficultyLabel: 'Schwierigkeit: ', updatedAt: 'Aktualisiert am',
+                category: { '川菜': 'Sichuan', '粤菜': 'Kantonesisch', '鲁菜': 'Shandong', '湘菜': 'Hunan', '苏菜': 'Jiangsu', '闽菜': 'Fujian', '浙菜': 'Zhejiang', '徽菜': 'Anhui' },
+                difficulty: { '简单': 'Einfach', '中等': 'Mittel', '困难': 'Schwer' }
+          }
+        };
+
+        function applyRecipeI18n(pageLang) {
+          var strings = RECIPE_I18N[pageLang];
+          if (!strings) return;
+
+          // Simple text labels
+          var els = document.querySelectorAll('[data-i18n-key]');
+          for (var i = 0; i < els.length; i++) {
+            var key = els[i].getAttribute('data-i18n-key');
+            var rawValue = els[i].getAttribute('data-raw-value');
+
+            if (key === 'category' && rawValue && strings.category) {
+              els[i].textContent = strings.category[rawValue] || rawValue;
+            } else if (key === 'difficulty' && rawValue && strings.difficulty) {
+              els[i].textContent = strings.difficulty[rawValue] || rawValue;
+            } else if (strings[key] && typeof strings[key] === 'string') {
+              els[i].textContent = strings[key];
+            }
+          }
+        }
+
+        // Apply i18n based on the article's own lang
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', function() { applyRecipeI18n(currentLang); });
+        } else {
+          applyRecipeI18n(currentLang);
+        }
+
+        // Auto-redirect to correct language version if global lang differs
         try {
           var stored = localStorage.getItem('site-lang');
           if (stored && SUPPORTED.indexOf(stored) !== -1 && stored !== currentLang) {
-            // User's preferred language differs from this article's language
-            // Try to navigate to the same article in the preferred language
             var path = window.location.pathname;
             var slug = path.replace(/^\/blog\//, '').replace(/\/$/, '');
             var baseParts = slug.split('-');
