@@ -1,0 +1,28 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_AUTHOR } from '../consts';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={`关于 | ${SITE_TITLE}`} description="关于这个中餐食谱博客" />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <h1>关于本站</h1>
+      <p>
+        欢迎来到「中餐食谱」！这里收录了各大菜系的经典菜肴，每道菜都配有详细的食材清单和步骤说明，
+        让你在家也能做出地道的中国味道。
+      </p>
+      <h2>关于作者</h2>
+      <p>
+        我是 {SITE_AUTHOR}，热爱烹饪和记录美食。如果你有任何问题或想分享你的做法，欢迎联系我。
+      </p>
+    </main>
+    <Footer />
+  </body>
+</html>

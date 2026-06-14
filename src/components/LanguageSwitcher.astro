@@ -1,0 +1,75 @@
+---
+interface Props {
+  currentLang: string;
+  translations?: Record<string, string>;
+}
+
+const { currentLang, translations } = Astro.props;
+
+// 支持的语言，顺序即切换器的显示顺序
+const languages: Record<string, { label: string; flag: string }> = {
+  zh: { label: "中文",   flag: "🇨🇳" },
+  en: { label: "EN",     flag: "🇺🇸" },
+  ja: { label: "日本語", flag: "🇯🇵" },
+  ko: { label: "한국어", flag: "🇰🇷" },
+  fr: { label: "FR",     flag: "🇫🇷" },
+  de: { label: "DE",     flag: "🇩🇪" },
+};
+---
+
+{translations && Object.keys(translations).length > 0 && (
+  <nav class="language-switcher" aria-label="Language selector">
+    {Object.entries(languages).map(([code, { label, flag }]) => {
+      const isActive = code === currentLang;
+      const slug = isActive ? null : translations?.[code];
+      // 当前语言始终显示；其他语言只在有对应译文 slug 时显示
+      if (!isActive && !slug) return null;
+      return isActive ? (
+        <span class="lang-btn active">{flag} {label}</span>
+      ) : (
+        <a href={`/blog/${slug}/`} class="lang-btn" hreflang={code}>
+          {flag} {label}
+        </a>
+      );
+    })}
+  </nav>
+)}
+
+<style>
+  .language-switcher {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    /* justify-content 不设 center，由父容器 article-meta 的 space-between 控制位置 */
+  }
+
+  .lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border: 1px solid rgb(var(--gray-light));
+    color: rgb(var(--gray));
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .lang-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(192, 57, 43, 0.05);
+    text-decoration: none;
+  }
+
+  .lang-btn.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    font-weight: 600;
+    cursor: default;
+  }
+</style>

@@ -1,0 +1,173 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  category,
+  cookTime,
+  prepTime,
+  servings,
+  difficulty,
+  lang = 'zh',
+  translations,
+} = Astro.props;
+---
+
+<html lang={lang}>
+  <head>
+    <BaseHead title={title} description={description} image={heroImage} />
+    <style>
+      main {
+        width: calc(100% - 2em);
+        max-width: 100%;
+        margin: 0;
+      }
+      .hero-image {
+        width: 100%;
+      }
+      .hero-image img {
+        display: block;
+        margin: 0 auto;
+        border-radius: 12px;
+        box-shadow: var(--box-shadow);
+      }
+      .hero-image.hidden {
+        display: none;
+      }
+      .prose {
+        width: 720px;
+        max-width: calc(100% - 2em);
+        margin: auto;
+        padding: 1em;
+        color: rgb(var(--gray-dark));
+      }
+      .title {
+        margin-bottom: 1em;
+        padding: 1em 0;
+        text-align: center;
+        line-height: 1;
+      }
+      .title h1 {
+        margin: 0 0 0.5em 0;
+      }
+      .date {
+        margin-bottom: 0.5em;
+        color: rgb(var(--gray));
+      }
+      .last-updated-on {
+        font-style: italic;
+      }
+      /* 与模板保持一致：日期在左，语言切换器在右 */
+      .article-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+      /* 食谱专属：菜系/难度徽章行 */
+      .recipe-badges {
+        display: flex;
+        justify-content: center;
+        gap: 0.6em;
+        flex-wrap: wrap;
+        margin-bottom: 0.8em;
+      }
+      .category-badge {
+        background: var(--accent);
+        color: white;
+        padding: 0.2em 0.8em;
+        border-radius: 20px;
+        font-size: 0.82em;
+        font-weight: 600;
+      }
+      .difficulty-badge {
+        border: 1px solid rgb(var(--gray-light));
+        padding: 0.2em 0.8em;
+        border-radius: 20px;
+        font-size: 0.82em;
+        color: rgb(var(--gray));
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <article>
+        {heroImage && (
+          <div class="hero-image" id="hero-wrap">
+            <img
+              width={1020}
+              height={510}
+              src={heroImage}
+              alt=""
+              onerror="this.parentElement.classList.add('hidden')"
+            />
+          </div>
+        )}
+        <div class="prose">
+          <div class="title">
+            <!-- 与模板完全一致的 article-meta 布局：日期左，语言切换器右 -->
+            <div class="article-meta">
+              <div class="date">
+                <FormattedDate date={pubDate} />
+                {updatedDate && (
+                  <div class="last-updated-on">
+                    更新于 <FormattedDate date={updatedDate} />
+                  </div>
+                )}
+              </div>
+              <LanguageSwitcher currentLang={lang} translations={translations} />
+            </div>
+            <!-- 食谱专属：菜系 + 难度徽章 -->
+            <div class="recipe-badges">
+              <span class="category-badge">{category}</span>
+              <span class="difficulty-badge">难度：{difficulty}</span>
+            </div>
+            <h1>{title}</h1>
+            <hr />
+          </div>
+
+          <!-- 食谱信息卡片（准备/烹饪时间、份量） -->
+          {(cookTime || prepTime || servings) && (
+            <div class="recipe-meta">
+              {prepTime && (
+                <div class="recipe-meta-item">
+                  <span class="label">准备时间</span>
+                  <span class="value">{prepTime}</span>
+                </div>
+              )}
+              {cookTime && (
+                <div class="recipe-meta-item">
+                  <span class="label">烹饪时间</span>
+                  <span class="value">{cookTime}</span>
+                </div>
+              )}
+              {servings && (
+                <div class="recipe-meta-item">
+                  <span class="label">份量</span>
+                  <span class="value">{servings}</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          <slot />
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
