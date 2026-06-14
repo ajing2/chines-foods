@@ -2,10 +2,35 @@
 ---
 
 <footer>
+  <div class="footer-content">
+    <span class="footer-brand">🥢 中餐食谱</span>
+    <span class="footer-divider">·</span>
+    <span class="footer-text">用心记录每一道中国味</span>
+  </div>
 </footer>
 
 <style>
   footer {
-    padding: 1em;
+    padding: 2em 1.5em;
+    text-align: center;
+    border-top: 1px solid rgba(var(--gray-light), 0.6);
+    margin-top: 2em;
+    background: rgba(var(--gray-light), 0.15);
+  }
+  .footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    flex-wrap: wrap;
+    font-size: 0.88em;
+    color: rgb(var(--gray));
+  }
+  .footer-brand {
+    font-weight: 600;
+    color: rgb(var(--gray-dark));
+  }
+  .footer-divider {
+    opacity: 0.4;
   }
 </style>

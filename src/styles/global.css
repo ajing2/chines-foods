@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&display=swap');
+
 :root {
   --accent: #c0392b;        /* 中国红 */
   --accent-dark: #922b21;
+  --accent-light: #e74c3c;
   --black: 15, 18, 25;
   --gray: 96, 115, 159;
   --gray-light: 229, 233, 240;
@@ -10,6 +13,10 @@
     0 2px 6px rgba(var(--gray), 25%),
     0 8px 24px rgba(var(--gray), 33%),
     0 16px 32px rgba(var(--gray), 33%);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
 }
 
 body {
@@ -17,26 +24,29 @@ body {
   margin: 0;
   padding: 0;
   text-align: left;
-  background: linear-gradient(var(--gray-gradient)) no-repeat;
-  background-size: 100% 600px;
+  background: #fafbfc;
+  background-image: radial-gradient(ellipse at top, rgba(192, 57, 43, 0.02) 0%, transparent 50%);
   word-wrap: break-word;
   overflow-wrap: break-word;
   color: rgb(var(--gray-dark));
-  font-size: 18px;
+  font-size: 17px;
   line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 main {
-  width: 760px;
+  width: 1100px;
   max-width: calc(100% - 2em);
   margin: auto;
-  padding: 3em 1em;
+  padding: 2em 1em 3em;
 }
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 0.5rem 0;
   color: rgb(var(--black));
   line-height: 1.3;
+  font-family: "Noto Serif SC", "Source Han Serif CN", "PingFang SC", serif;
 }
 h1 { font-size: 2.5em; }
 h2 { font-size: 2em; }
@@ -49,8 +59,10 @@ strong, b { font-weight: 700; }
 a {
   color: var(--accent);
   text-decoration: none;
+  transition: color 0.2s;
 }
 a:hover {
+  color: var(--accent-dark);
   text-decoration: underline;
 }
 
@@ -60,7 +72,7 @@ p { margin-bottom: 1em; }
 img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 code {
@@ -72,17 +84,19 @@ code {
 
 pre {
   padding: 1.5em;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   overflow-x: auto;
 }
 pre > code { all: unset; }
 
 blockquote {
   border-left: 4px solid var(--accent);
-  padding: 0.5em 0 0.5em 1.2em;
-  margin: 1em 0;
+  padding: 0.8em 0 0.8em 1.5em;
+  margin: 1.5em 0;
   font-style: italic;
   color: rgb(var(--gray));
+  background: rgba(192, 57, 43, 0.02);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
 hr {
@@ -94,25 +108,27 @@ hr {
 table {
   width: 100%;
   border-collapse: collapse;
+  border-radius: var(--radius-md);
+  overflow: hidden;
 }
 th, td {
-  padding: 0.6em 1em;
+  padding: 0.7em 1em;
   border: 1px solid rgb(var(--gray-light));
   text-align: left;
 }
 th {
-  background: rgb(var(--gray-light));
+  background: rgba(var(--gray-light), 0.5);
   font-weight: 600;
 }
 
-/* 食谱信息卡片 */
+/* 食谱信息卡片 (legacy support) */
 .recipe-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  background: #fff8f6;
-  border: 1px solid #f5c6c0;
-  border-radius: 10px;
+  background: linear-gradient(135deg, #fff8f6 0%, #fff 100%);
+  border: 1px solid rgba(192, 57, 43, 0.1);
+  border-radius: var(--radius-lg);
   padding: 1.2em 1.5em;
   margin: 1.5em 0;
 }
@@ -132,6 +148,17 @@ th {
   font-size: 1em;
   font-weight: 600;
   color: var(--accent);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(192, 57, 43, 0.15);
+  color: rgb(var(--black));
 }
 
 @media (max-width: 720px) {

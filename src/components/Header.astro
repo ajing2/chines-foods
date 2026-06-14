@@ -5,7 +5,10 @@ import { SITE_TITLE } from '../consts';
 
 <header>
   <nav>
-    <a class="site-title" href="/" data-i18n-nav="siteTitle">{SITE_TITLE}</a>
+    <a class="site-title" href="/" data-i18n-nav="siteTitle">
+      <span class="title-icon">🥢</span>
+      <span class="title-text">{SITE_TITLE}</span>
+    </a>
     <div class="nav-links">
       <HeaderLink href="/" data-i18n-nav="navHome">首页</HeaderLink>
       <HeaderLink href="/blog" data-i18n-nav="navRecipes">食谱</HeaderLink>
@@ -32,34 +35,81 @@ import { SITE_TITLE } from '../consts';
   header {
     margin: 0;
     padding: 0 1.5em;
-    background: white;
-    box-shadow: 0 2px 8px rgba(var(--black), 5%);
+    background: linear-gradient(135deg, #fff 0%, #fff9f8 100%);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(192, 57, 43, 0.04);
     position: sticky;
     top: 0;
     z-index: 100;
+    border-bottom: 1px solid rgba(192, 57, 43, 0.06);
+    backdrop-filter: blur(12px);
   }
   nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 960px;
+    max-width: 1100px;
     margin: 0 auto;
-    height: 56px;
+    height: 64px;
   }
   .site-title {
-    font-size: 1.3em;
-    font-weight: 700;
-    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
     text-decoration: none;
-    letter-spacing: 0.02em;
+    position: relative;
+    padding: 0.3em 0;
   }
   .site-title:hover {
     text-decoration: none;
-    opacity: 0.85;
   }
+  .title-icon {
+    font-size: 1.4em;
+    display: inline-block;
+    animation: chopstick-wiggle 3s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  .title-text {
+    font-size: 1.5em;
+    font-weight: 800;
+    background: linear-gradient(135deg, #c0392b 0%, #e74c3c 40%, #d35400 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.06em;
+    font-family: "Noto Serif SC", "Source Han Serif CN", "PingFang SC", serif;
+    position: relative;
+  }
+  .title-text::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2.5px;
+    background: linear-gradient(90deg, #c0392b, #e74c3c, #d35400);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+  .site-title:hover .title-text::after {
+    width: 100%;
+  }
+  .site-title:hover .title-icon {
+    animation: chopstick-bounce 0.5s ease;
+  }
+
+  @keyframes chopstick-wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+  }
+  @keyframes chopstick-bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2) rotate(-5deg); }
+  }
+
   .nav-links {
     display: flex;
-    gap: 0.2em;
+    gap: 0.3em;
     align-items: center;
   }
 
@@ -74,57 +124,71 @@ import { SITE_TITLE } from '../consts';
     gap: 0.2em;
     background: none;
     border: 1px solid rgb(var(--gray-light));
-    border-radius: 6px;
-    padding: 0.3em 0.6em;
+    border-radius: 8px;
+    padding: 0.35em 0.7em;
     cursor: pointer;
     font-size: 0.85em;
-    transition: border-color 0.2s;
+    transition: all 0.2s;
   }
   .nav-lang-current:hover {
     border-color: var(--accent);
+    background: rgba(192, 57, 43, 0.04);
+    transform: translateY(-1px);
   }
   .nav-lang-flag { font-size: 1.1em; }
-  .nav-lang-arrow { font-size: 0.7em; color: rgb(var(--gray)); }
+  .nav-lang-arrow { font-size: 0.7em; color: rgb(var(--gray)); transition: transform 0.2s; }
+  .nav-lang-switcher:has(.nav-lang-dropdown.open) .nav-lang-arrow {
+    transform: rotate(180deg);
+  }
 
   .nav-lang-dropdown {
     display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    margin-top: 0.3em;
+    margin-top: 0.4em;
     background: white;
     border: 1px solid rgb(var(--gray-light));
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
     overflow: hidden;
     z-index: 200;
-    min-width: 130px;
+    min-width: 140px;
   }
   .nav-lang-dropdown.open {
     display: block;
+    animation: dropdown-in 0.2s ease;
+  }
+  @keyframes dropdown-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
   .nav-lang-option {
     display: block;
     width: 100%;
-    padding: 0.5em 0.8em;
+    padding: 0.6em 1em;
     border: none;
     background: none;
     text-align: left;
     font-size: 0.85em;
     cursor: pointer;
-    transition: background 0.15s;
+    transition: all 0.15s;
   }
   .nav-lang-option:hover {
-    background: rgba(192, 57, 43, 0.08);
+    background: rgba(192, 57, 43, 0.06);
+    padding-left: 1.2em;
   }
   .nav-lang-option.active {
-    background: rgba(192, 57, 43, 0.12);
+    background: rgba(192, 57, 43, 0.1);
     font-weight: 600;
     color: var(--accent);
+    border-left: 3px solid var(--accent);
   }
 
   @media (max-width: 480px) {
     .nav-links { gap: 0; }
+    .title-text { font-size: 1.2em; }
+    nav { height: 56px; }
   }
 </style>
 
@@ -153,11 +217,19 @@ import { SITE_TITLE } from '../consts';
     var strings = NAV_STRINGS[lang];
     if (!strings) return;
 
-    // Update nav text
+    // Update nav text (only update .title-text, not the icon)
     var els = document.querySelectorAll('[data-i18n-nav]');
     for (var i = 0; i < els.length; i++) {
       var key = els[i].getAttribute('data-i18n-nav');
-      if (strings[key]) els[i].textContent = strings[key];
+      if (strings[key]) {
+        // For site title, update only the .title-text span
+        if (key === 'siteTitle') {
+          var textSpan = els[i].querySelector('.title-text');
+          if (textSpan) textSpan.textContent = strings[key];
+        } else {
+          els[i].textContent = strings[key];
+        }
+      }
     }
 
     // Update flag

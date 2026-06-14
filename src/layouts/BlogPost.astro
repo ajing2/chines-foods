@@ -29,76 +29,224 @@ const {
     <BaseHead title={title} description={description} image={heroImage} />
     <style>
       main {
-        width: calc(100% - 2em);
+        width: 100%;
         max-width: 100%;
         margin: 0;
+        padding: 0;
       }
-      .hero-image {
+
+      /* Hero section */
+      .hero-section {
+        position: relative;
         width: 100%;
+        max-height: 480px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
       }
-      .hero-image img {
+      .hero-section img {
         display: block;
-        margin: 0 auto;
-        border-radius: 12px;
-        box-shadow: var(--box-shadow);
+        width: 100%;
+        height: 480px;
+        object-fit: cover;
+        border-radius: 0;
+        opacity: 0.85;
       }
-      .hero-image.hidden {
+      .hero-section.hidden {
         display: none;
       }
-      .prose {
-        width: 720px;
+      .hero-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 50%;
+        background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+        pointer-events: none;
+      }
+
+      /* Article container */
+      .article-container {
+        width: 780px;
         max-width: calc(100% - 2em);
-        margin: auto;
-        padding: 1em;
-        color: rgb(var(--gray-dark));
+        margin: -3em auto 0;
+        position: relative;
+        z-index: 10;
+        padding-bottom: 3em;
       }
-      .title {
-        margin-bottom: 1em;
-        padding: 1em 0;
+      .article-container.no-hero {
+        margin-top: 2em;
+      }
+
+      /* Article card */
+      .article-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+        padding: 2.5em 2.8em;
+        border: 1px solid rgba(var(--gray-light), 0.5);
+      }
+
+      /* Title section */
+      .article-header {
         text-align: center;
-        line-height: 1;
+        margin-bottom: 2em;
+        padding-bottom: 1.5em;
+        border-bottom: 1px solid rgba(var(--gray-light), 0.6);
       }
-      .title h1 {
-        margin: 0 0 0.5em 0;
+      .article-header h1 {
+        font-size: 2.2em;
+        font-weight: 800;
+        margin: 0 0 0.6em;
+        line-height: 1.3;
+        color: rgb(var(--black));
+        font-family: "Noto Serif SC", "Source Han Serif CN", "PingFang SC", serif;
       }
-      .date {
-        margin-bottom: 0.5em;
-        color: rgb(var(--gray));
-      }
-      .last-updated-on {
-        font-style: italic;
-      }
-      /* 与模板保持一致：日期在左，语言切换器在右 */
-      .article-meta {
+
+      /* Meta row */
+      .article-meta-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
+        gap: 0.8rem;
+        margin-bottom: 1em;
       }
-      /* 食谱专属：菜系/难度徽章行 */
+      .meta-date {
+        font-size: 0.88em;
+        color: rgb(var(--gray));
+      }
+      .meta-date .last-updated-on {
+        font-style: italic;
+        margin-top: 0.2em;
+      }
+
+      /* Recipe badges */
       .recipe-badges {
         display: flex;
         justify-content: center;
         gap: 0.6em;
         flex-wrap: wrap;
-        margin-bottom: 0.8em;
+        margin-bottom: 1em;
       }
-      .category-badge {
-        background: var(--accent);
-        color: white;
-        padding: 0.2em 0.8em;
+      .badge {
+        padding: 0.3em 1em;
         border-radius: 20px;
         font-size: 0.82em;
         font-weight: 600;
       }
-      .difficulty-badge {
+      .badge-category {
+        background: linear-gradient(135deg, #c0392b, #e74c3c);
+        color: white;
+      }
+      .badge-difficulty {
+        background: rgba(var(--gray-light), 0.5);
+        color: rgb(var(--gray-dark));
         border: 1px solid rgb(var(--gray-light));
-        padding: 0.2em 0.8em;
-        border-radius: 20px;
-        font-size: 0.82em;
+      }
+
+      /* Recipe info card */
+      .recipe-info-card {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1em;
+        background: linear-gradient(135deg, #fff8f6 0%, #fff 100%);
+        border: 1px solid rgba(192, 57, 43, 0.1);
+        border-radius: 14px;
+        padding: 1.5em 2em;
+        margin: 1.8em 0 2em;
+      }
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0.5em;
+      }
+      .info-item .info-icon {
+        font-size: 1.5em;
+        margin-bottom: 0.3em;
+      }
+      .info-item .info-label {
+        font-size: 0.75em;
         color: rgb(var(--gray));
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.2em;
+      }
+      .info-item .info-value {
+        font-size: 1.05em;
+        font-weight: 700;
+        color: var(--accent);
+      }
+
+      /* Prose content */
+      .prose-content {
+        font-size: 1.05em;
+        line-height: 1.9;
+        color: rgb(var(--gray-dark));
+      }
+      .prose-content :global(h2) {
+        font-size: 1.6em;
+        margin: 2em 0 0.8em;
+        padding-bottom: 0.4em;
+        border-bottom: 2px solid rgba(192, 57, 43, 0.1);
+        color: rgb(var(--black));
+        font-family: "Noto Serif SC", "Source Han Serif CN", "PingFang SC", serif;
+      }
+      .prose-content :global(h3) {
+        font-size: 1.3em;
+        margin: 1.5em 0 0.6em;
+        color: rgb(var(--black));
+      }
+      .prose-content :global(p) {
+        margin-bottom: 1.4em;
+      }
+      .prose-content :global(img) {
+        border-radius: 12px;
+        margin: 1.5em 0;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      }
+      .prose-content :global(ul),
+      .prose-content :global(ol) {
+        padding-left: 1.5em;
+        margin-bottom: 1.4em;
+      }
+      .prose-content :global(li) {
+        margin-bottom: 0.5em;
+        line-height: 1.8;
+      }
+      .prose-content :global(blockquote) {
+        border-left: 4px solid var(--accent);
+        background: rgba(192, 57, 43, 0.03);
+        padding: 1em 1.5em;
+        margin: 1.5em 0;
+        border-radius: 0 10px 10px 0;
+        font-style: italic;
+      }
+      .prose-content :global(table) {
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 1.5em 0;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      }
+      .prose-content :global(th) {
+        background: rgba(192, 57, 43, 0.06);
+        font-weight: 600;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .hero-section img { height: 300px; }
+        .article-container { margin-top: -2em; }
+        .article-card { padding: 1.8em 1.5em; border-radius: 16px; }
+        .article-header h1 { font-size: 1.7em; }
+        .recipe-info-card { padding: 1.2em 1em; }
+      }
+      @media (max-width: 480px) {
+        .hero-section img { height: 220px; }
+        .article-card { padding: 1.5em 1.2em; }
+        .article-header h1 { font-size: 1.5em; }
+        .recipe-info-card { grid-template-columns: 1fr 1fr; }
       }
     </style>
   </head>
@@ -107,64 +255,75 @@ const {
     <main>
       <article>
         {heroImage && (
-          <div class="hero-image" id="hero-wrap">
+          <div class="hero-section" id="hero-wrap">
             <img
-              width={1020}
-              height={510}
               src={heroImage}
-              alt=""
+              alt={title}
               onerror="this.parentElement.classList.add('hidden')"
             />
+            <div class="hero-overlay"></div>
           </div>
         )}
-        <div class="prose">
-          <div class="title">
-            <!-- 与模板完全一致的 article-meta 布局：日期左，语言切换器右 -->
-            <div class="article-meta">
-              <div class="date">
-                <FormattedDate date={pubDate} />
-                {updatedDate && (
-                  <div class="last-updated-on">
-                    <span data-i18n-key="updatedAt"></span> <FormattedDate date={updatedDate} />
+
+        <div class={`article-container ${!heroImage ? 'no-hero' : ''}`}>
+          <div class="article-card">
+            <div class="article-header">
+              <!-- Meta row: date + language switcher -->
+              <div class="article-meta-row">
+                <div class="meta-date">
+                  <FormattedDate date={pubDate} />
+                  {updatedDate && (
+                    <div class="last-updated-on">
+                      <span data-i18n-key="updatedAt"></span> <FormattedDate date={updatedDate} />
+                    </div>
+                  )}
+                </div>
+                <LanguageSwitcher currentLang={lang} translations={translations} />
+              </div>
+
+              <!-- Recipe badges -->
+              <div class="recipe-badges">
+                <span class="badge badge-category" data-i18n-key="category" data-raw-value={category}>{category}</span>
+                <span class="badge badge-difficulty">
+                  <span data-i18n-key="difficultyLabel"></span><span data-i18n-key="difficulty" data-raw-value={difficulty}></span>
+                </span>
+              </div>
+
+              <h1>{title}</h1>
+            </div>
+
+            <!-- Recipe info card -->
+            {(cookTime || prepTime || servings) && (
+              <div class="recipe-info-card">
+                {prepTime && (
+                  <div class="info-item">
+                    <span class="info-icon">🔪</span>
+                    <span class="info-label" data-i18n-key="prepTime">准备时间</span>
+                    <span class="info-value">{prepTime}</span>
+                  </div>
+                )}
+                {cookTime && (
+                  <div class="info-item">
+                    <span class="info-icon">🔥</span>
+                    <span class="info-label" data-i18n-key="cookTime">烹饪时间</span>
+                    <span class="info-value">{cookTime}</span>
+                  </div>
+                )}
+                {servings && (
+                  <div class="info-item">
+                    <span class="info-icon">🍽️</span>
+                    <span class="info-label" data-i18n-key="servings">份量</span>
+                    <span class="info-value">{servings}</span>
                   </div>
                 )}
               </div>
-              <LanguageSwitcher currentLang={lang} translations={translations} />
+            )}
+
+            <!-- Article content -->
+            <div class="prose-content">
+              <slot />
             </div>
-            <!-- 食谱专属：菜系 + 难度徽章 -->
-            <div class="recipe-badges">
-              <span class="category-badge" data-i18n-key="category" data-raw-value={category}>{category}</span>
-              <span class="difficulty-badge"><span data-i18n-key="difficultyLabel"></span><span data-i18n-key="difficulty" data-raw-value={difficulty}></span></span>
-            </div>
-            <h1>{title}</h1>
-            <hr />
           </div>
-
-          <!-- 食谱信息卡片（准备/烹饪时间、份量） -->
-          {(cookTime || prepTime || servings) && (
-            <div class="recipe-meta">
-              {prepTime && (
-                <div class="recipe-meta-item">
-                  <span class="label" data-i18n-key="prepTime"></span>
-                  <span class="value">{prepTime}</span>
-                </div>
-              )}
-              {cookTime && (
-                <div class="recipe-meta-item">
-                  <span class="label" data-i18n-key="cookTime"></span>
-                  <span class="value">{cookTime}</span>
-                </div>
-              )}
-              {servings && (
-                <div class="recipe-meta-item">
-                  <span class="label" data-i18n-key="servings"></span>
-                  <span class="value">{servings}</span>
-                </div>
-              )}
-            </div>
-          )}
-
-          <slot />
         </div>
       </article>
     </main>
@@ -179,23 +338,23 @@ const {
         // i18n strings for recipe detail page
         var RECIPE_I18N = {
           zh: { prepTime: '准备时间', cookTime: '烹饪时间', servings: '份量', difficultyLabel: '难度：', updatedAt: '更新于',
-                category: { '川菜': '川菜', '粤菜': '粤菜', '鲁菜': '鲁菜', '湘菜': '湘菜', '苏菜': '苏菜', '闽菜': '闽菜', '浙菜': '浙菜', '徽菜': '徽菜' },
+                category: { '川菜': '川菜', '粤菜': '粤菜', '鲁菜': '鲁菜', '湘菜': '湘菜', '苏菜': '苏菜', '闽菜': '闽菜', '浙菜': '浙菜', '徽菜': '徽菜', '家常菜': '家常菜', '其他': '其他' },
                 difficulty: { '简单': '简单', '中等': '中等', '困难': '困难' }
           },
           en: { prepTime: 'Prep Time', cookTime: 'Cook Time', servings: 'Servings', difficultyLabel: 'Difficulty: ', updatedAt: 'Updated on',
-                category: { '川菜': 'Sichuan', '粤菜': 'Cantonese', '鲁菜': 'Shandong', '湘菜': 'Hunan', '苏菜': 'Jiangsu', '闽菜': 'Fujian', '浙菜': 'Zhejiang', '徽菜': 'Anhui' },
+                category: { '川菜': 'Sichuan', '粤菜': 'Cantonese', '鲁菜': 'Shandong', '湘菜': 'Hunan', '苏菜': 'Jiangsu', '闽菜': 'Fujian', '浙菜': 'Zhejiang', '徽菜': 'Anhui', '家常菜': 'Home-style', '其他': 'Other' },
                 difficulty: { '简单': 'Easy', '中等': 'Medium', '困难': 'Hard' }
           },
           ja: { prepTime: '下準備', cookTime: '調理時間', servings: '分量', difficultyLabel: '難易度：', updatedAt: '更新日',
-                category: { '川菜': '四川料理', '粤菜': '広東料理', '鲁菜': '山東料理', '湘菜': '湖南料理', '苏菜': '江蘇料理', '闽菜': '福建料理', '浙菜': '浙江料理', '徽菜': '安徽料理' },
+                category: { '川菜': '四川料理', '粤菜': '広東料理', '鲁菜': '山東料理', '湘菜': '湖南料理', '苏菜': '江蘇料理', '闽菜': '福建料理', '浙菜': '浙江料理', '徽菜': '安徽料理', '家常菜': '家庭料理', '其他': 'その他' },
                 difficulty: { '简单': '簡単', '中等': '普通', '困难': '難しい' }
           },
           fr: { prepTime: 'Préparation', cookTime: 'Cuisson', servings: 'Portions', difficultyLabel: 'Difficulté : ', updatedAt: 'Mis à jour le',
-                category: { '川菜': 'Sichuan', '粤菜': 'Cantonais', '鲁菜': 'Shandong', '湘菜': 'Hunan', '苏菜': 'Jiangsu', '闽菜': 'Fujian', '浙菜': 'Zhejiang', '徽菜': 'Anhui' },
+                category: { '川菜': 'Sichuan', '粤菜': 'Cantonais', '鲁菜': 'Shandong', '湘菜': 'Hunan', '苏菜': 'Jiangsu', '闽菜': 'Fujian', '浙菜': 'Zhejiang', '徽菜': 'Anhui', '家常菜': 'Familial', '其他': 'Autre' },
                 difficulty: { '简单': 'Facile', '中等': 'Moyen', '困难': 'Difficile' }
           },
           de: { prepTime: 'Vorbereitung', cookTime: 'Kochzeit', servings: 'Portionen', difficultyLabel: 'Schwierigkeit: ', updatedAt: 'Aktualisiert am',
-                category: { '川菜': 'Sichuan', '粤菜': 'Kantonesisch', '鲁菜': 'Shandong', '湘菜': 'Hunan', '苏菜': 'Jiangsu', '闽菜': 'Fujian', '浙菜': 'Zhejiang', '徽菜': 'Anhui' },
+                category: { '川菜': 'Sichuan', '粤菜': 'Kantonesisch', '鲁菜': 'Shandong', '湘菜': 'Hunan', '苏菜': 'Jiangsu', '闽菜': 'Fujian', '浙菜': 'Zhejiang', '徽菜': 'Anhui', '家常菜': 'Hausmannskost', '其他': 'Andere' },
                 difficulty: { '简单': 'Einfach', '中等': 'Mittel', '困难': 'Schwer' }
           }
         };

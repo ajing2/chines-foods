@@ -16,157 +16,307 @@ const allPosts = (await getCollection('blog'))
   <head>
     <BaseHead title={`食谱列表 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
     <style>
+      /* Page hero section */
+      .page-hero {
+        text-align: center;
+        padding: 2.5em 1em 2em;
+        position: relative;
+        overflow: hidden;
+      }
+      .page-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200%;
+        height: 100%;
+        background: radial-gradient(ellipse at center, rgba(192, 57, 43, 0.04) 0%, transparent 70%);
+        pointer-events: none;
+      }
       .page-title {
-        font-size: 2em;
-        margin-bottom: 0.2em;
+        font-size: 2.4em;
+        font-weight: 800;
+        margin-bottom: 0.3em;
+        background: linear-gradient(135deg, #c0392b, #e74c3c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-family: "Noto Serif SC", "Source Han Serif CN", "PingFang SC", serif;
+        letter-spacing: 0.02em;
       }
       .page-subtitle {
         color: rgb(var(--gray));
-        margin-bottom: 2em;
+        margin-bottom: 0;
+        font-size: 1.05em;
       }
-      .posts-list {
+
+      /* Filter bar */
+      .filter-bar {
+        display: flex;
+        justify-content: center;
+        gap: 0.5em;
+        flex-wrap: wrap;
+        padding: 0 1em 1.5em;
+        margin-bottom: 0.5em;
+      }
+      .filter-chip {
+        padding: 0.4em 1em;
+        border-radius: 20px;
+        border: 1px solid rgb(var(--gray-light));
+        background: white;
+        font-size: 0.85em;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: rgb(var(--gray-dark));
+      }
+      .filter-chip:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: rgba(192, 57, 43, 0.04);
+      }
+      .filter-chip.active {
+        background: var(--accent);
+        color: white;
+        border-color: var(--accent);
+      }
+
+      /* Card grid layout */
+      .posts-grid {
         list-style: none;
         margin: 0;
         padding: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.8rem;
       }
-      .post-item a {
-        display: flex;
-        gap: 1.2em;
-        text-decoration: none;
-        border-radius: 10px;
-        border: 1px solid rgb(var(--gray-light));
+
+      /* Card styles */
+      .post-card {
+        border-radius: 16px;
         overflow: hidden;
-        transition: box-shadow 0.2s;
-      }
-      .post-item a:hover {
-        box-shadow: var(--box-shadow);
-        text-decoration: none;
-      }
-      .post-item img {
-        width: 180px;
-        height: 120px;
-        object-fit: cover;
-        flex-shrink: 0;
-        border-radius: 0;
-      }
-      .post-item .item-body {
-        padding: 1em 1em 1em 0;
+        background: white;
+        border: 1px solid rgba(var(--gray-light), 0.7);
+        transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         display: flex;
         flex-direction: column;
-        justify-content: center;
       }
-      .item-meta {
+      .post-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(192, 57, 43, 0.1), 0 4px 12px rgba(0,0,0,0.06);
+        border-color: rgba(192, 57, 43, 0.15);
+      }
+      .post-card a {
+        text-decoration: none;
         display: flex;
-        gap: 0.6em;
-        align-items: center;
-        margin-bottom: 0.4em;
+        flex-direction: column;
+        height: 100%;
       }
-      .category-badge {
-        background: var(--accent);
-        color: white;
-        padding: 0.15em 0.6em;
-        border-radius: 20px;
-        font-size: 0.78em;
-        font-weight: 600;
+      .post-card a:hover {
+        text-decoration: none;
       }
-      .difficulty-badge {
-        border: 1px solid rgb(var(--gray-light));
-        padding: 0.15em 0.6em;
-        border-radius: 20px;
-        font-size: 0.78em;
-        color: rgb(var(--gray));
+
+      /* Card image */
+      .card-image {
+        position: relative;
+        width: 100%;
+        padding-top: 60%;
+        overflow: hidden;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
       }
-      .lang-badge {
-        background: rgba(192, 57, 43, 0.1);
-        color: var(--accent);
-        padding: 0.15em 0.6em;
-        border-radius: 20px;
-        font-size: 0.78em;
-        font-weight: 600;
+      .card-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0;
+        transition: transform 0.4s ease;
       }
-      .post-item h2 {
-        font-size: 1.15em;
-        margin: 0 0 0.3em;
+      .post-card:hover .card-image img {
+        transform: scale(1.05);
+      }
+      .card-image .card-badges {
+        position: absolute;
+        top: 0.8em;
+        left: 0.8em;
+        display: flex;
+        gap: 0.4em;
+        z-index: 2;
+      }
+
+      /* Card body */
+      .card-body {
+        padding: 1.2em 1.3em 1.4em;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .card-body h2 {
+        font-size: 1.2em;
+        font-weight: 700;
+        margin: 0 0 0.5em;
         color: rgb(var(--black));
-      }
-      .post-item p {
-        font-size: 0.9em;
-        color: rgb(var(--gray));
-        margin: 0 0 0.4em;
+        line-height: 1.4;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
       }
-      .post-date {
+      .card-body p {
+        font-size: 0.9em;
+        color: rgb(var(--gray));
+        margin: 0 0 0.8em;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        flex: 1;
+      }
+
+      /* Card footer */
+      .card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 0.8em;
+        border-top: 1px solid rgba(var(--gray-light), 0.6);
         font-size: 0.82em;
         color: rgb(var(--gray));
       }
-      .post-item[data-hidden="true"] {
+      .card-footer .cook-time {
+        display: flex;
+        align-items: center;
+        gap: 0.3em;
+      }
+      .card-footer .cook-time::before {
+        content: '⏱';
+        font-size: 0.9em;
+      }
+
+      /* Badges */
+      .badge {
+        padding: 0.25em 0.7em;
+        border-radius: 20px;
+        font-size: 0.75em;
+        font-weight: 600;
+        backdrop-filter: blur(8px);
+      }
+      .badge-category {
+        background: rgba(192, 57, 43, 0.9);
+        color: white;
+      }
+      .badge-difficulty {
+        background: rgba(255, 255, 255, 0.9);
+        color: rgb(var(--gray-dark));
+        border: 1px solid rgba(255,255,255,0.3);
+      }
+      .badge-lang {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      /* Hidden state */
+      .post-card[data-hidden="true"] {
         display: none;
       }
-      @media (max-width: 600px) {
-        .post-item img { width: 110px; height: 90px; }
+
+      /* Empty state */
+      .empty-state {
+        text-align: center;
+        padding: 4em 2em;
+        color: rgb(var(--gray));
+      }
+      .empty-state .empty-icon {
+        font-size: 3em;
+        margin-bottom: 0.5em;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .posts-grid {
+          grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+          gap: 1.2rem;
+        }
+        .page-title { font-size: 1.8em; }
+      }
+      @media (max-width: 480px) {
+        .posts-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        .card-image { padding-top: 55%; }
       }
     </style>
   </head>
   <body>
     <Header />
     <main>
-      <h1 class="page-title" id="blog-title">所有食谱</h1>
-      <p class="page-subtitle" id="blog-subtitle">共 {allPosts.length} 道菜</p>
-      <ul class="posts-list" id="posts-list">
+      <div class="page-hero">
+        <h1 class="page-title" id="blog-title">所有食谱</h1>
+        <p class="page-subtitle" id="blog-subtitle">共 {allPosts.length} 道菜</p>
+      </div>
+
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-chip active" data-filter="all" id="filter-all">全部</button>
+      </div>
+
+      <ul class="posts-grid" id="posts-list">
         {allPosts.map((post) => (
-          <li class="post-item" data-post-lang={post.data.lang || 'zh'} data-category={post.data.category} data-difficulty={post.data.difficulty}>
+          <li class="post-card" data-post-lang={post.data.lang || 'zh'} data-category={post.data.category} data-difficulty={post.data.difficulty}>
             <a href={`/blog/${post.id}/`}>
-              {post.data.heroImage && (
-                <img src={post.data.heroImage} alt={post.data.title} />
-              )}
-              <div class="item-body">
-                <div class="item-meta">
-                  <span class="category-badge" data-translate="category">{post.data.category}</span>
-                  <span class="difficulty-badge" data-translate="difficulty">{post.data.difficulty}</span>
-                  <span class="lang-badge">{
-                    (post.data.lang || 'zh') === 'zh' ? '\u{1F1E8}\u{1F1F3} \u4E2D\u6587' :
-                    (post.data.lang || 'zh') === 'en' ? '\u{1F1FA}\u{1F1F8} EN' :
-                    (post.data.lang || 'zh') === 'ja' ? '\u{1F1EF}\u{1F1F5} JA' :
-                    (post.data.lang || 'zh') === 'fr' ? '\u{1F1EB}\u{1F1F7} FR' :
-                    '\u{1F1E9}\u{1F1EA} DE'
-                  }</span>
+              <div class="card-image">
+                {post.data.heroImage && (
+                  <img src={post.data.heroImage} alt={post.data.title} loading="lazy" />
+                )}
+                <div class="card-badges">
+                  <span class="badge badge-category" data-translate="category">{post.data.category}</span>
+                  <span class="badge badge-difficulty" data-translate="difficulty">{post.data.difficulty}</span>
                 </div>
+              </div>
+              <div class="card-body">
                 <h2>{post.data.title}</h2>
                 <p>{post.data.description}</p>
-                <span class="post-date">
-                  <FormattedDate date={post.data.pubDate} />
-                  {post.data.cookTime && ` \u00B7 ${post.data.cookTime}`}
-                </span>
+                <div class="card-footer">
+                  <span class="post-date">
+                    <FormattedDate date={post.data.pubDate} />
+                  </span>
+                  {post.data.cookTime && (
+                    <span class="cook-time">{post.data.cookTime}</span>
+                  )}
+                </div>
               </div>
             </a>
           </li>
         ))}
       </ul>
+
+      <div class="empty-state" id="empty-state" style="display:none;">
+        <div class="empty-icon">🍜</div>
+        <p id="empty-text">暂无食谱</p>
+      </div>
     </main>
     <Footer />
 
     <script is:inline>
     (function() {
       var BLOG_STRINGS = {
-        zh: { title: '\u6240\u6709\u98DF\u8C31', subtitle: function(n) { return '\u5171 ' + n + ' \u9053\u83DC'; } },
-        en: { title: 'All Recipes', subtitle: function(n) { return n + ' recipes'; } },
-        ja: { title: '\u5168\u30EC\u30B7\u30D4', subtitle: function(n) { return '\u5168' + n + '\u54C1'; } },
-        fr: { title: 'Toutes les Recettes', subtitle: function(n) { return n + ' recettes'; } },
-        de: { title: 'Alle Rezepte', subtitle: function(n) { return n + ' Rezepte'; } }
+        zh: { title: '\u6240\u6709\u98DF\u8C31', subtitle: function(n) { return '\u5171 ' + n + ' \u9053\u83DC'; }, all: '\u5168\u90E8', empty: '\u6682\u65E0\u98DF\u8C31' },
+        en: { title: 'All Recipes', subtitle: function(n) { return n + ' recipes'; }, all: 'All', empty: 'No recipes yet' },
+        ja: { title: '\u5168\u30EC\u30B7\u30D4', subtitle: function(n) { return '\u5168' + n + '\u54C1'; }, all: '\u5168\u3066', empty: '\u30EC\u30B7\u30D4\u306A\u3057' },
+        fr: { title: 'Toutes les Recettes', subtitle: function(n) { return n + ' recettes'; }, all: 'Tout', empty: 'Pas encore de recettes' },
+        de: { title: 'Alle Rezepte', subtitle: function(n) { return n + ' Rezepte'; }, all: 'Alle', empty: 'Noch keine Rezepte' }
       };
 
       var CATEGORY_I18N = {
-        zh: { '\u5DDD\u83DC': '\u5DDD\u83DC', '\u7CA4\u83DC': '\u7CA4\u83DC', '\u9C81\u83DC': '\u9C81\u83DC', '\u6E58\u83DC': '\u6E58\u83DC', '\u82CF\u83DC': '\u82CF\u83DC', '\u95FD\u83DC': '\u95FD\u83DC', '\u6D59\u83DC': '\u6D59\u83DC', '\u5FBD\u83DC': '\u5FBD\u83DC' },
-        en: { '\u5DDD\u83DC': 'Sichuan', '\u7CA4\u83DC': 'Cantonese', '\u9C81\u83DC': 'Shandong', '\u6E58\u83DC': 'Hunan', '\u82CF\u83DC': 'Jiangsu', '\u95FD\u83DC': 'Fujian', '\u6D59\u83DC': 'Zhejiang', '\u5FBD\u83DC': 'Anhui' },
-        ja: { '\u5DDD\u83DC': '\u56DB\u5DDD\u6599\u7406', '\u7CA4\u83DC': '\u5E83\u6771\u6599\u7406', '\u9C81\u83DC': '\u5C71\u6771\u6599\u7406', '\u6E58\u83DC': '\u6E56\u5357\u6599\u7406', '\u82CF\u83DC': '\u6C5F\u8607\u6599\u7406', '\u95FD\u83DC': '\u798F\u5EFA\u6599\u7406', '\u6D59\u83DC': '\u6D59\u6C5F\u6599\u7406', '\u5FBD\u83DC': '\u5B89\u5FBD\u6599\u7406' },
-        fr: { '\u5DDD\u83DC': 'Sichuan', '\u7CA4\u83DC': 'Cantonais', '\u9C81\u83DC': 'Shandong', '\u6E58\u83DC': 'Hunan', '\u82CF\u83DC': 'Jiangsu', '\u95FD\u83DC': 'Fujian', '\u6D59\u83DC': 'Zhejiang', '\u5FBD\u83DC': 'Anhui' },
-        de: { '\u5DDD\u83DC': 'Sichuan', '\u7CA4\u83DC': 'Kantonesisch', '\u9C81\u83DC': 'Shandong', '\u6E58\u83DC': 'Hunan', '\u82CF\u83DC': 'Jiangsu', '\u95FD\u83DC': 'Fujian', '\u6D59\u83DC': 'Zhejiang', '\u5FBD\u83DC': 'Anhui' }
+        zh: { '\u5DDD\u83DC': '\u5DDD\u83DC', '\u7CA4\u83DC': '\u7CA4\u83DC', '\u9C81\u83DC': '\u9C81\u83DC', '\u6E58\u83DC': '\u6E58\u83DC', '\u82CF\u83DC': '\u82CF\u83DC', '\u95FD\u83DC': '\u95FD\u83DC', '\u6D59\u83DC': '\u6D59\u83DC', '\u5FBD\u83DC': '\u5FBD\u83DC', '\u5BB6\u5E38\u83DC': '\u5BB6\u5E38\u83DC', '\u5176\u4ED6': '\u5176\u4ED6' },
+        en: { '\u5DDD\u83DC': 'Sichuan', '\u7CA4\u83DC': 'Cantonese', '\u9C81\u83DC': 'Shandong', '\u6E58\u83DC': 'Hunan', '\u82CF\u83DC': 'Jiangsu', '\u95FD\u83DC': 'Fujian', '\u6D59\u83DC': 'Zhejiang', '\u5FBD\u83DC': 'Anhui', '\u5BB6\u5E38\u83DC': 'Home-style', '\u5176\u4ED6': 'Other' },
+        ja: { '\u5DDD\u83DC': '\u56DB\u5DDD\u6599\u7406', '\u7CA4\u83DC': '\u5E83\u6771\u6599\u7406', '\u9C81\u83DC': '\u5C71\u6771\u6599\u7406', '\u6E58\u83DC': '\u6E56\u5357\u6599\u7406', '\u82CF\u83DC': '\u6C5F\u8607\u6599\u7406', '\u95FD\u83DC': '\u798F\u5EFA\u6599\u7406', '\u6D59\u83DC': '\u6D59\u6C5F\u6599\u7406', '\u5FBD\u83DC': '\u5B89\u5FBD\u6599\u7406', '\u5BB6\u5E38\u83DC': '\u5BB6\u5EAD\u6599\u7406', '\u5176\u4ED6': '\u305D\u306E\u4ED6' },
+        fr: { '\u5DDD\u83DC': 'Sichuan', '\u7CA4\u83DC': 'Cantonais', '\u9C81\u83DC': 'Shandong', '\u6E58\u83DC': 'Hunan', '\u82CF\u83DC': 'Jiangsu', '\u95FD\u83DC': 'Fujian', '\u6D59\u83DC': 'Zhejiang', '\u5FBD\u83DC': 'Anhui', '\u5BB6\u5E38\u83DC': 'Familial', '\u5176\u4ED6': 'Autre' },
+        de: { '\u5DDD\u83DC': 'Sichuan', '\u7CA4\u83DC': 'Kantonesisch', '\u9C81\u83DC': 'Shandong', '\u6E58\u83DC': 'Hunan', '\u82CF\u83DC': 'Jiangsu', '\u95FD\u83DC': 'Fujian', '\u6D59\u83DC': 'Zhejiang', '\u5FBD\u83DC': 'Anhui', '\u5BB6\u5E38\u83DC': 'Hausmannskost', '\u5176\u4ED6': 'Andere' }
       };
 
       var DIFFICULTY_I18N = {
@@ -194,9 +344,14 @@ const allPosts = (await getCollection('blog'))
         var catMap = CATEGORY_I18N[lang] || {};
         var diffMap = DIFFICULTY_I18N[lang] || {};
 
+        // Update filter bar "All" button text
+        var filterAll = document.getElementById('filter-all');
+        if (filterAll) filterAll.textContent = strings.all;
+
         // Filter posts and translate badges
-        var items = document.querySelectorAll('.post-item');
+        var items = document.querySelectorAll('.post-card');
         var count = 0;
+        var categories = {};
         for (var i = 0; i < items.length; i++) {
           var postLang = items[i].getAttribute('data-post-lang');
           if (postLang === lang) {
@@ -204,10 +359,13 @@ const allPosts = (await getCollection('blog'))
             items[i].style.display = '';
             count++;
 
+            // Track categories for filter chips
+            var rawCat = items[i].getAttribute('data-category');
+            if (rawCat) categories[rawCat] = (catMap[rawCat] || rawCat);
+
             // Translate category and difficulty badges
             var catBadge = items[i].querySelector('[data-translate="category"]');
             var diffBadge = items[i].querySelector('[data-translate="difficulty"]');
-            var rawCat = items[i].getAttribute('data-category');
             var rawDiff = items[i].getAttribute('data-difficulty');
             if (catBadge && rawCat) catBadge.textContent = catMap[rawCat] || rawCat;
             if (diffBadge && rawDiff) diffBadge.textContent = diffMap[rawDiff] || rawDiff;
@@ -217,11 +375,76 @@ const allPosts = (await getCollection('blog'))
           }
         }
 
+        // Build filter chips
+        var filterBar = document.getElementById('filter-bar');
+        if (filterBar) {
+          // Keep only the "All" button, remove others
+          var existingChips = filterBar.querySelectorAll('.filter-chip:not(#filter-all)');
+          for (var j = 0; j < existingChips.length; j++) {
+            existingChips[j].remove();
+          }
+          // Add category chips
+          var catKeys = Object.keys(categories);
+          for (var k = 0; k < catKeys.length; k++) {
+            var chip = document.createElement('button');
+            chip.className = 'filter-chip';
+            chip.setAttribute('data-filter', catKeys[k]);
+            chip.textContent = categories[catKeys[k]];
+            chip.addEventListener('click', handleFilterClick);
+            filterBar.appendChild(chip);
+          }
+        }
+
+        // Show/hide empty state
+        var emptyState = document.getElementById('empty-state');
+        var emptyText = document.getElementById('empty-text');
+        if (emptyState) {
+          emptyState.style.display = count === 0 ? 'block' : 'none';
+        }
+        if (emptyText) emptyText.textContent = strings.empty;
+
         // Update title and subtitle
         var titleEl = document.getElementById('blog-title');
         var subtitleEl = document.getElementById('blog-subtitle');
         if (titleEl) titleEl.textContent = strings.title;
         if (subtitleEl) subtitleEl.textContent = strings.subtitle(count);
+      }
+
+      function handleFilterClick(e) {
+        var filter = e.target.getAttribute('data-filter');
+        var lang = getLang();
+
+        // Update active chip
+        var chips = document.querySelectorAll('.filter-chip');
+        for (var i = 0; i < chips.length; i++) {
+          chips[i].classList.remove('active');
+        }
+        e.target.classList.add('active');
+
+        // Filter cards
+        var items = document.querySelectorAll('.post-card');
+        var count = 0;
+        for (var i = 0; i < items.length; i++) {
+          var postLang = items[i].getAttribute('data-post-lang');
+          var postCat = items[i].getAttribute('data-category');
+          if (postLang === lang && (filter === 'all' || postCat === filter)) {
+            items[i].style.display = '';
+            items[i].setAttribute('data-hidden', 'false');
+            count++;
+          } else {
+            items[i].style.display = 'none';
+            items[i].setAttribute('data-hidden', 'true');
+          }
+        }
+
+        // Update subtitle count
+        var strings = BLOG_STRINGS[lang];
+        var subtitleEl = document.getElementById('blog-subtitle');
+        if (subtitleEl && strings) subtitleEl.textContent = strings.subtitle(count);
+
+        // Show/hide empty state
+        var emptyState = document.getElementById('empty-state');
+        if (emptyState) emptyState.style.display = count === 0 ? 'block' : 'none';
       }
 
       if (document.readyState === 'loading') {
