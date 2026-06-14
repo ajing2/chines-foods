@@ -209,19 +209,12 @@ import { SITE_TITLE } from '../consts';
         var path = window.location.pathname;
         // On article detail page: navigate to the same article in the new language
         if (path.indexOf('/blog/') === 0 && path !== '/blog/') {
-          // Extract slug: /blog/kung-pao-chicken-en/ -> kung-pao-chicken-en
+          // New format: /blog/recipe-name/lang/ -> split by /
           var slug = path.replace(/^\/blog\//, '').replace(/\/$/, '');
-          // Replace the language suffix (last segment after last hyphen)
-          var baseParts = slug.split('-');
-          var lastPart = baseParts[baseParts.length - 1];
-          // Check if last part is a known language code
-          if (SUPPORTED.indexOf(lastPart) !== -1) {
-            baseParts[baseParts.length - 1] = newLang;
-            var newSlug = baseParts.join('-');
-            window.location.href = '/blog/' + newSlug + '/';
-          } else {
-            // Fallback: append language suffix
-            window.location.href = '/blog/' + slug + '-' + newLang + '/';
+          var parts = slug.split('/');
+          if (parts.length === 2 && SUPPORTED.indexOf(parts[1]) !== -1) {
+            // Replace language segment: recipe-name/oldLang -> recipe-name/newLang
+            window.location.href = '/blog/' + parts[0] + '/' + newLang + '/';
           }
         } else if (path === '/blog' || path === '/blog/') {
           // Blog list page: reload to re-filter
