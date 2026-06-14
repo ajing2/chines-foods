@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["Hühnchen", "Sichuan", "scharf", "Erdnüsse", "Wok", "Schnellgericht", "Hausmannskost", "Geschichte"]
 lang: "de"
 translations:
-  zh: "kung-pao-chicken-zh"
-  en: "kung-pao-chicken-en"
-  ja: "kung-pao-chicken-ja"
-  fr: "kung-pao-chicken-fr"
+  zh: "kung-pao-chicken/zh"
+  en: "kung-pao-chicken/en"
+  ja: "kung-pao-chicken/ja"
+  fr: "kung-pao-chicken/fr"
 ---
 
 Seit über 150 Jahren begeistert Kung Pao Hühnchen die Menschen in China — ein Gericht, das nach einem echten Gouverneur benannt wurde, eine politische Revolution überlebte und heute in drei verschiedenen Regionalstilen existiert.

@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["豆腐", "川菜", "麻辣", "下饭菜", "家常菜", "历史典故", "素食可改", "快手菜"]
 lang: "zh"
 translations:
-  en: "mapo-tofu-en"
-  de: "mapo-tofu-de"
-  ja: "mapo-tofu-ja"
-  fr: "mapo-tofu-fr"
+  en: "mapo-tofu/en"
+  de: "mapo-tofu/de"
+  ja: "mapo-tofu/ja"
+  fr: "mapo-tofu/fr"
 ---
 
 一块平平无奇的白豆腐，遇上花椒和豆瓣酱，就能变成让人连扒三碗饭的灵魂料理——这就是麻婆豆腐的魔力，也是川菜"化腐朽为神奇"的最佳注脚。

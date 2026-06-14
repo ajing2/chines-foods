@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["Tofu", "Sichuan", "scharf", "Comfort Food", "schnelles Gericht", "chinesische Kueche", "Szechuan-Pfeffer", "Klassiker"]
 lang: "de"
 translations:
-  zh: "mapo-tofu-zh"
-  en: "mapo-tofu-en"
-  ja: "mapo-tofu-ja"
-  fr: "mapo-tofu-fr"
+  zh: "mapo-tofu/zh"
+  en: "mapo-tofu/en"
+  ja: "mapo-tofu/ja"
+  fr: "mapo-tofu/fr"
 ---
 
 Ein schlichter Block weisser Tofu, ein Loeffel fermentierte Chilipaste und eine Prise Szechuan-Pfeffer — mehr braucht es nicht, um eines der befriedigendsten Gerichte der gesamten chinesischen Kueche zu kreieren. Mapo Tofu ist der Beweis, dass Genialitaet in der Einfachheit liegt.

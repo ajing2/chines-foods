@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["chicken", "Sichuan", "spicy", "peanuts", "stir-fry", "weeknight dinner", "home cooking", "Chinese history"]
 lang: "en"
 translations:
-  zh: "kung-pao-chicken-zh"
-  de: "kung-pao-chicken-de"
-  ja: "kung-pao-chicken-ja"
-  fr: "kung-pao-chicken-fr"
+  zh: "kung-pao-chicken/zh"
+  de: "kung-pao-chicken/de"
+  ja: "kung-pao-chicken/ja"
+  fr: "kung-pao-chicken/fr"
 ---
 
 There's a reason why Kung Pao Chicken has been one of China's most beloved dishes for over 150 years — one bite of that tender chicken coated in a fiery, sweet-sour sauce with the tingle of Sichuan peppercorn, and you'll understand why emperors and commoners alike couldn't resist it.

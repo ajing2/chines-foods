@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["tofu", "Sichuan", "spicy", "comfort food", "quick meal", "weeknight dinner", "Chinese classic", "numbing spicy"]
 lang: "en"
 translations:
-  zh: "mapo-tofu-zh"
-  de: "mapo-tofu-de"
-  ja: "mapo-tofu-ja"
-  fr: "mapo-tofu-fr"
+  zh: "mapo-tofu/zh"
+  de: "mapo-tofu/de"
+  ja: "mapo-tofu/ja"
+  fr: "mapo-tofu/fr"
 ---
 
 A plain block of white tofu, a spoonful of chili bean paste, and a shower of Sichuan peppercorns — that's all it takes to create one of the most soul-satisfying dishes in all of Chinese cuisine. Mapo Tofu is proof that genius lives in simplicity.

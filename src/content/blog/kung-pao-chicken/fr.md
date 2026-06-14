@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["poulet", "Sichuan", "épicé", "cacahuètes", "wok", "cuisine familiale", "recette rapide", "histoire"]
 lang: "fr"
 translations:
-  zh: "kung-pao-chicken-zh"
-  en: "kung-pao-chicken-en"
-  de: "kung-pao-chicken-de"
-  ja: "kung-pao-chicken-ja"
+  zh: "kung-pao-chicken/zh"
+  en: "kung-pao-chicken/en"
+  de: "kung-pao-chicken/de"
+  ja: "kung-pao-chicken/ja"
 ---
 
 Depuis plus de 150 ans, le Poulet Kung Pao fait vibrer les papilles en Chine — un plat qui porte le nom d'un véritable gouverneur de la dynastie Qing, qui a survécu à une révolution culturelle, et qui existe aujourd'hui en trois styles régionaux distincts.

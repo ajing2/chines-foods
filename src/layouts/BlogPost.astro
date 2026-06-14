@@ -232,12 +232,11 @@ const {
           var stored = localStorage.getItem('site-lang');
           if (stored && SUPPORTED.indexOf(stored) !== -1 && stored !== currentLang) {
             var path = window.location.pathname;
+            // New format: /blog/recipe-name/lang/
             var slug = path.replace(/^\/blog\//, '').replace(/\/$/, '');
-            var baseParts = slug.split('-');
-            var lastPart = baseParts[baseParts.length - 1];
-            if (SUPPORTED.indexOf(lastPart) !== -1) {
-              baseParts[baseParts.length - 1] = stored;
-              var newSlug = baseParts.join('-');
+            var parts = slug.split('/');
+            if (parts.length === 2 && SUPPORTED.indexOf(parts[1]) !== -1) {
+              var newSlug = parts[0] + '/' + stored;
               window.location.replace('/blog/' + newSlug + '/');
             }
           }

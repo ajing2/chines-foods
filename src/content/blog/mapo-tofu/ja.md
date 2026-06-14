@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["豆腐", "四川料理", "麻辣", "ご飯のお供", "本格中華", "歴史", "時短", "花椒"]
 lang: "ja"
 translations:
-  zh: "mapo-tofu-zh"
-  en: "mapo-tofu-en"
-  de: "mapo-tofu-de"
-  fr: "mapo-tofu-fr"
+  zh: "mapo-tofu/zh"
+  en: "mapo-tofu/en"
+  de: "mapo-tofu/de"
+  fr: "mapo-tofu/fr"
 ---
 
 何の変哲もない白い豆腐が、花椒と豆板醤に出会った瞬間、ご飯が止まらなくなる魔法の一皿に変わる——これが麻婆豆腐の魔力であり、四川料理の「平凡を非凡に変える」真髄です。

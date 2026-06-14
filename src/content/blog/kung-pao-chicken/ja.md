@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["鶏肉", "四川料理", "辛い", "ピーナッツ", "炒め物", "家庭料理", "時短レシピ", "歴史"]
 lang: "ja"
 translations:
-  zh: "kung-pao-chicken-zh"
-  en: "kung-pao-chicken-en"
-  de: "kung-pao-chicken-de"
-  fr: "kung-pao-chicken-fr"
+  zh: "kung-pao-chicken/zh"
+  en: "kung-pao-chicken/en"
+  de: "kung-pao-chicken/de"
+  fr: "kung-pao-chicken/fr"
 ---
 
 150年以上にわたって中国で愛され続ける宮保鶏丁——その名前には、清朝の実在した総督の物語が刻まれています。日本の中華料理店で出される「宮保鶏丁」とは一味違う、本場四川の歴史と味をご紹介します。

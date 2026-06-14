@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["鸡肉", "川菜", "辣味", "花生", "快手菜", "下饭菜", "家常菜", "历史典故"]
 lang: "zh"
 translations:
-  en: "kung-pao-chicken-en"
-  de: "kung-pao-chicken-de"
-  ja: "kung-pao-chicken-ja"
-  fr: "kung-pao-chicken-fr"
+  en: "kung-pao-chicken/en"
+  de: "kung-pao-chicken/de"
+  ja: "kung-pao-chicken/ja"
+  fr: "kung-pao-chicken/fr"
 ---
 
 一道菜能流传一百五十多年，靠的不只是味道——宫保鸡丁背后，藏着一位清朝封疆大吏的传奇故事，和一段中国人对美食信仰的执念。

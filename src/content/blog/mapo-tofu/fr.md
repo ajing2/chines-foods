@@ -11,10 +11,10 @@ difficulty: "简单"
 tags: ["tofu", "Sichuan", "epice", "comfort food", "repas rapide", "cuisine chinoise", "poivre du Sichuan", "classique"]
 lang: "fr"
 translations:
-  zh: "mapo-tofu-zh"
-  en: "mapo-tofu-en"
-  de: "mapo-tofu-de"
-  ja: "mapo-tofu-ja"
+  zh: "mapo-tofu/zh"
+  en: "mapo-tofu/en"
+  de: "mapo-tofu/de"
+  ja: "mapo-tofu/ja"
 ---
 
 Un simple bloc de tofu blanc, une cuillere de pate de piment fermentee et une pluie de poivre du Sichuan — c'est tout ce qu'il faut pour creer l'un des plats les plus reconfortants de toute la gastronomie chinoise. Le Mapo Tofu est la preuve que le genie reside dans la simplicite.
