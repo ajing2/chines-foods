@@ -93,9 +93,13 @@ Couper le poulet en dés de 1,5 cm, mélanger avec tous les ingrédients de la m
 
 Mettre les cacahuètes crues dans un wok FROID avec un peu d'huile — le départ à froid est crucial, car l'huile chaude brûlerait l'extérieur en laissant l'intérieur cru (le même principe que pour les frites : on commence à basse température). Faire revenir à feu moyen-doux en remuant constamment pendant environ 3 minutes, jusqu'à ce que les peaux se fissurent et que les cacahuètes soient dorées. Retirer immédiatement et laisser refroidir — elles deviendront encore plus croquantes en refroidissant. Inutile avec des cacahuètes déjà grillées.
 
+![Torréfaction des cacahuètes](/images/recipes/kung-pao-chicken/step-fry-peanuts.jpg)
+
 ### Étape 3 : Faire revenir les piments jusqu'au parfum
 
 Chauffer l'huile dans le wok à feu moyen jusqu'à ce qu'elle miroite. Ajouter les tronçons de piments et faire revenir doucement environ 20 secondes — ils passeront du rouge vif à un bordeaux profond, et la cuisine se remplira d'un arôme fumé et torréfié. Cette étape s'appelle *chǎo chū hóng yóu* (炒出红油, « extraire l'huile rouge ») et constitue la base aromatique de tout le plat — comparable au principe du « suer » en cuisine française, où l'on extrait les saveurs dans le gras. Si vous utilisez du doubanjiang, l'ajouter maintenant et remuer jusqu'à ce que l'huile devienne rouge profond.
+
+![Faire revenir les piments pour l'huile rouge](/images/recipes/kung-pao-chicken/step-fry-chili.jpg)
 
 ### Étape 4 : Saisir le poulet à feu vif
 
@@ -106,6 +110,8 @@ Monter le feu au maximum. Ajouter la cébette, le gingembre et l'ail ; faire rev
 ### Étape 5 : Ajouter les légumes
 
 Ajouter les dés de carotte et faire sauter 30 secondes (la carotte est plus ferme et a besoin d'une avance). Puis ajouter le concombre et faire sauter seulement 20 secondes — les légumes doivent rester croquants et colorés, pas devenir mous et aqueux.
+
+![Ajout des légumes](/images/recipes/kung-pao-chicken/step-add-vegetables.jpg)
 
 ### Étape 6 : Ajouter la sauce et finaliser
 

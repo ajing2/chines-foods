@@ -93,9 +93,13 @@ Cut the chicken into 1.5cm (½-inch) cubes. Combine with all Marinade A ingredie
 
 Add raw peanuts to a COLD wok with a little oil — starting cold is crucial, as hot oil would burn the outside while leaving the inside raw. Fry over medium-low heat, stirring constantly, until the skins crack and the peanuts turn golden (about 3 minutes). Remove immediately and cool on a plate; they'll continue crisping as they cool. Skip this step if using pre-roasted peanuts.
 
+![Frying peanuts in cold oil](/images/recipes/kung-pao-chicken/step-fry-peanuts.jpg)
+
 ### Step 3: Fry the Chilies Until Fragrant
 
 Heat oil in the wok over medium heat until it shimmers. Add the dried chili sections and fry gently for about 20 seconds — you'll see them darken from bright red to a deep burgundy, and the kitchen will fill with a smoky, toasty aroma. This step is called *chǎo chū hóng yóu* (炒出红油, "frying out the red oil") and it's the flavor foundation of the entire dish. If using doubanjiang, add it now and stir until the oil turns deep red.
+
+![Frying dried chilies to release red oil](/images/recipes/kung-pao-chicken/step-fry-chili.jpg)
 
 ### Step 4: Stir-Fry the Chicken Over High Heat
 
@@ -106,6 +110,8 @@ Crank the heat to maximum. Add scallion whites, ginger, and garlic; stir-fry for
 ### Step 5: Add the Vegetables
 
 Add the diced carrot and stir-fry for 30 seconds (carrot is firmer and needs a head start). Then add the cucumber and stir-fry for just 20 seconds — you want the vegetables to stay crisp and vibrant, not go soft and watery.
+
+![Adding vegetables to the wok](/images/recipes/kung-pao-chicken/step-add-vegetables.jpg)
 
 ### Step 6: Add the Sauce and Finish
 

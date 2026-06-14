@@ -93,9 +93,13 @@ Das Hühnchen in 1,5 cm große Würfel schneiden, mit allen Zutaten der Marinade
 
 Rohe Erdnüsse mit etwas Öl in einen KALTEN Wok geben — der kalte Start ist entscheidend, da heißes Öl die Außenseite verbrennen würde, während das Innere roh bleibt. Bei mittlerer bis niedriger Hitze unter ständigem Rühren etwa 3 Minuten braten, bis die Schalen aufplatzen und die Erdnüsse goldbraun sind. Sofort herausnehmen und abkühlen lassen — sie werden beim Abkühlen noch knuspriger. Bei bereits gerösteten Erdnüssen diesen Schritt überspringen.
 
+![Erdnüsse rösten](/images/recipes/kung-pao-chicken/step-fry-peanuts.jpg)
+
 ### Schritt 3: Chilis anrösten bis sie duften
 
 Öl im Wok bei mittlerer Hitze erhitzen, bis es leicht schimmert. Die Chilistücke hinzufügen und etwa 20 Sekunden sanft braten — sie werden von leuchtend rot zu einem tiefen Burgunderrot, und die Küche füllt sich mit einem rauchig-nussigen Aroma. Dieser Schritt heißt *chǎo chū hóng yóu* (炒出红油, „das rote Öl herausbraten") und bildet die Geschmacksgrundlage des gesamten Gerichts. Falls Doubanjiang verwendet wird, jetzt hinzufügen und rühren, bis das Öl tiefrot wird.
+
+![Chilis anrösten für das rote Öl](/images/recipes/kung-pao-chicken/step-fry-chili.jpg)
 
 ### Schritt 4: Hühnchen bei starker Hitze anbraten
 
@@ -106,6 +110,8 @@ Die Hitze auf Maximum stellen. Frühlingszwiebelweiß, Ingwer und Knoblauch hinz
 ### Schritt 5: Gemüse hinzufügen
 
 Die Karottenwürfel hinzufügen und 30 Sekunden anbraten (Karotte ist fester und braucht einen Vorsprung). Dann die Gurkenwürfel dazugeben und nur 20 Sekunden braten — das Gemüse soll knackig und farbenfroh bleiben, nicht weich und wässrig werden.
+
+![Gemüse hinzufügen](/images/recipes/kung-pao-chicken/step-add-vegetables.jpg)
 
 ### Schritt 6: Sauce hinzufügen und fertigstellen
 
