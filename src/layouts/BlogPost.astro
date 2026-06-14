@@ -169,5 +169,29 @@ const {
       </article>
     </main>
     <Footer />
+
+    <!-- Auto-redirect to correct language version if global lang differs -->
+    <script is:inline define:vars={{ lang }}>
+      (function() {
+        var SUPPORTED = ['zh', 'en', 'ja', 'fr', 'de'];
+        var currentLang = lang;
+        try {
+          var stored = localStorage.getItem('site-lang');
+          if (stored && SUPPORTED.indexOf(stored) !== -1 && stored !== currentLang) {
+            // User's preferred language differs from this article's language
+            // Try to navigate to the same article in the preferred language
+            var path = window.location.pathname;
+            var slug = path.replace(/^\/blog\//, '').replace(/\/$/, '');
+            var baseParts = slug.split('-');
+            var lastPart = baseParts[baseParts.length - 1];
+            if (SUPPORTED.indexOf(lastPart) !== -1) {
+              baseParts[baseParts.length - 1] = stored;
+              var newSlug = baseParts.join('-');
+              window.location.replace('/blog/' + newSlug + '/');
+            }
+          }
+        } catch(e) {}
+      })();
+    </script>
   </body>
 </html>

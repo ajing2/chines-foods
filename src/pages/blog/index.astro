@@ -6,9 +6,8 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog'))
-  // 列表页只展示中文（默认语言）文章，译文版本通过文章内的语言切换器访问
-  .filter((post) => !post.data.lang || post.data.lang === 'zh')
+// 获取所有文章（所有语言），客户端根据 localStorage 过滤
+const allPosts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
@@ -80,6 +79,14 @@ const posts = (await getCollection('blog'))
         font-size: 0.78em;
         color: rgb(var(--gray));
       }
+      .lang-badge {
+        background: rgba(192, 57, 43, 0.1);
+        color: var(--accent);
+        padding: 0.15em 0.6em;
+        border-radius: 20px;
+        font-size: 0.78em;
+        font-weight: 600;
+      }
       .post-item h2 {
         font-size: 1.15em;
         margin: 0 0 0.3em;
@@ -98,6 +105,9 @@ const posts = (await getCollection('blog'))
         font-size: 0.82em;
         color: rgb(var(--gray));
       }
+      .post-item[data-hidden="true"] {
+        display: none;
+      }
       @media (max-width: 600px) {
         .post-item img { width: 110px; height: 90px; }
       }
@@ -106,11 +116,11 @@ const posts = (await getCollection('blog'))
   <body>
     <Header />
     <main>
-      <h1 class="page-title">所有食谱</h1>
-      <p class="page-subtitle">共 {posts.length} 道菜</p>
-      <ul class="posts-list">
-        {posts.map((post) => (
-          <li class="post-item">
+      <h1 class="page-title" id="blog-title">所有食谱</h1>
+      <p class="page-subtitle" id="blog-subtitle">共 {allPosts.length} 道菜</p>
+      <ul class="posts-list" id="posts-list">
+        {allPosts.map((post) => (
+          <li class="post-item" data-post-lang={post.data.lang || 'zh'}>
             <a href={`/blog/${post.id}/`}>
               {post.data.heroImage && (
                 <img src={post.data.heroImage} alt={post.data.title} />
@@ -119,12 +129,19 @@ const posts = (await getCollection('blog'))
                 <div class="item-meta">
                   <span class="category-badge">{post.data.category}</span>
                   <span class="difficulty-badge">{post.data.difficulty}</span>
+                  <span class="lang-badge">{
+                    (post.data.lang || 'zh') === 'zh' ? '\u{1F1E8}\u{1F1F3} \u4E2D\u6587' :
+                    (post.data.lang || 'zh') === 'en' ? '\u{1F1FA}\u{1F1F8} EN' :
+                    (post.data.lang || 'zh') === 'ja' ? '\u{1F1EF}\u{1F1F5} JA' :
+                    (post.data.lang || 'zh') === 'fr' ? '\u{1F1EB}\u{1F1F7} FR' :
+                    '\u{1F1E9}\u{1F1EA} DE'
+                  }</span>
                 </div>
                 <h2>{post.data.title}</h2>
                 <p>{post.data.description}</p>
                 <span class="post-date">
                   <FormattedDate date={post.data.pubDate} />
-                  {post.data.cookTime && ` · 烹饪 ${post.data.cookTime}`}
+                  {post.data.cookTime && ` \u00B7 ${post.data.cookTime}`}
                 </span>
               </div>
             </a>
@@ -133,5 +150,64 @@ const posts = (await getCollection('blog'))
       </ul>
     </main>
     <Footer />
+
+    <script is:inline>
+    (function() {
+      var BLOG_STRINGS = {
+        zh: { title: '\u6240\u6709\u98DF\u8C31', subtitle: function(n) { return '\u5171 ' + n + ' \u9053\u83DC'; } },
+        en: { title: 'All Recipes', subtitle: function(n) { return n + ' recipes'; } },
+        ja: { title: '\u5168\u30EC\u30B7\u30D4', subtitle: function(n) { return '\u5168' + n + '\u54C1'; } },
+        fr: { title: 'Toutes les Recettes', subtitle: function(n) { return n + ' recettes'; } },
+        de: { title: 'Alle Rezepte', subtitle: function(n) { return n + ' Rezepte'; } }
+      };
+
+      var SUPPORTED = ['zh', 'en', 'ja', 'fr', 'de'];
+
+      function getLang() {
+        try {
+          var stored = localStorage.getItem('site-lang');
+          if (stored && SUPPORTED.indexOf(stored) !== -1) return stored;
+        } catch(e) {}
+        return 'zh';
+      }
+
+      function applyBlogLang(lang) {
+        var strings = BLOG_STRINGS[lang];
+        if (!strings) return;
+
+        // Filter posts
+        var items = document.querySelectorAll('.post-item');
+        var count = 0;
+        for (var i = 0; i < items.length; i++) {
+          var postLang = items[i].getAttribute('data-post-lang');
+          if (postLang === lang) {
+            items[i].setAttribute('data-hidden', 'false');
+            items[i].style.display = '';
+            count++;
+          } else {
+            items[i].setAttribute('data-hidden', 'true');
+            items[i].style.display = 'none';
+          }
+        }
+
+        // Update title and subtitle
+        var titleEl = document.getElementById('blog-title');
+        var subtitleEl = document.getElementById('blog-subtitle');
+        if (titleEl) titleEl.textContent = strings.title;
+        if (subtitleEl) subtitleEl.textContent = strings.subtitle(count);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { applyBlogLang(getLang()); });
+      } else {
+        applyBlogLang(getLang());
+      }
+
+      // Listen for storage changes (if user switches lang in another tab)
+      window.addEventListener('storage', function(e) {
+        if (e.key === 'site-lang') applyBlogLang(getLang());
+      });
+    })();
+    </script>
   </body>
 </html>

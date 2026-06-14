@@ -5,11 +5,25 @@ import { SITE_TITLE } from '../consts';
 
 <header>
   <nav>
-    <a class="site-title" href="/">{SITE_TITLE}</a>
+    <a class="site-title" href="/" data-i18n-nav="siteTitle">{SITE_TITLE}</a>
     <div class="nav-links">
-      <HeaderLink href="/">首页</HeaderLink>
-      <HeaderLink href="/blog">食谱</HeaderLink>
-      <HeaderLink href="/about">关于</HeaderLink>
+      <HeaderLink href="/" data-i18n-nav="navHome">首页</HeaderLink>
+      <HeaderLink href="/blog" data-i18n-nav="navRecipes">食谱</HeaderLink>
+      <HeaderLink href="/about" data-i18n-nav="navAbout">关于</HeaderLink>
+      <!-- Compact language switcher for inner pages -->
+      <div class="nav-lang-switcher" id="nav-lang-switcher">
+        <button class="nav-lang-current" id="nav-lang-current" aria-label="Switch language">
+          <span class="nav-lang-flag" id="nav-lang-flag">&#x1F1E8;&#x1F1F3;</span>
+          <span class="nav-lang-arrow">&#x25BE;</span>
+        </button>
+        <div class="nav-lang-dropdown" id="nav-lang-dropdown">
+          <button class="nav-lang-option" data-lang="zh">&#x1F1E8;&#x1F1F3; 中文</button>
+          <button class="nav-lang-option" data-lang="en">&#x1F1FA;&#x1F1F8; English</button>
+          <button class="nav-lang-option" data-lang="ja">&#x1F1EF;&#x1F1F5; 日本語</button>
+          <button class="nav-lang-option" data-lang="fr">&#x1F1EB;&#x1F1F7; Français</button>
+          <button class="nav-lang-option" data-lang="de">&#x1F1E9;&#x1F1EA; Deutsch</button>
+        </div>
+      </div>
     </div>
   </nav>
 </header>
@@ -46,8 +60,181 @@ import { SITE_TITLE } from '../consts';
   .nav-links {
     display: flex;
     gap: 0.2em;
+    align-items: center;
   }
+
+  /* Language dropdown */
+  .nav-lang-switcher {
+    position: relative;
+    margin-left: 0.8em;
+  }
+  .nav-lang-current {
+    display: flex;
+    align-items: center;
+    gap: 0.2em;
+    background: none;
+    border: 1px solid rgb(var(--gray-light));
+    border-radius: 6px;
+    padding: 0.3em 0.6em;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: border-color 0.2s;
+  }
+  .nav-lang-current:hover {
+    border-color: var(--accent);
+  }
+  .nav-lang-flag { font-size: 1.1em; }
+  .nav-lang-arrow { font-size: 0.7em; color: rgb(var(--gray)); }
+
+  .nav-lang-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.3em;
+    background: white;
+    border: 1px solid rgb(var(--gray-light));
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    overflow: hidden;
+    z-index: 200;
+    min-width: 130px;
+  }
+  .nav-lang-dropdown.open {
+    display: block;
+  }
+  .nav-lang-option {
+    display: block;
+    width: 100%;
+    padding: 0.5em 0.8em;
+    border: none;
+    background: none;
+    text-align: left;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .nav-lang-option:hover {
+    background: rgba(192, 57, 43, 0.08);
+  }
+  .nav-lang-option.active {
+    background: rgba(192, 57, 43, 0.12);
+    font-weight: 600;
+    color: var(--accent);
+  }
+
   @media (max-width: 480px) {
     .nav-links { gap: 0; }
   }
 </style>
+
+<script is:inline>
+(function() {
+  var NAV_STRINGS = {
+    zh: { siteTitle: '\u4E2D\u9910\u98DF\u8C31', navHome: '\u9996\u9875', navRecipes: '\u98DF\u8C31', navAbout: '\u5173\u4E8E' },
+    en: { siteTitle: 'Chinese Recipes', navHome: 'Home', navRecipes: 'Recipes', navAbout: 'About' },
+    ja: { siteTitle: '\u4E2D\u83EF\u30EC\u30B7\u30D4', navHome: '\u30DB\u30FC\u30E0', navRecipes: '\u30EC\u30B7\u30D4', navAbout: '\u6982\u8981' },
+    fr: { siteTitle: 'Recettes Chinoises', navHome: 'Accueil', navRecipes: 'Recettes', navAbout: '\u00C0 propos' },
+    de: { siteTitle: 'Chinesische Rezepte', navHome: 'Startseite', navRecipes: 'Rezepte', navAbout: '\u00DCber uns' }
+  };
+
+  var FLAGS = { zh: '\u{1F1E8}\u{1F1F3}', en: '\u{1F1FA}\u{1F1F8}', ja: '\u{1F1EF}\u{1F1F5}', fr: '\u{1F1EB}\u{1F1F7}', de: '\u{1F1E9}\u{1F1EA}' };
+  var SUPPORTED = ['zh', 'en', 'ja', 'fr', 'de'];
+
+  function getLang() {
+    try {
+      var stored = localStorage.getItem('site-lang');
+      if (stored && SUPPORTED.indexOf(stored) !== -1) return stored;
+    } catch(e) {}
+    return 'zh';
+  }
+
+  function applyNavLang(lang) {
+    var strings = NAV_STRINGS[lang];
+    if (!strings) return;
+
+    // Update nav text
+    var els = document.querySelectorAll('[data-i18n-nav]');
+    for (var i = 0; i < els.length; i++) {
+      var key = els[i].getAttribute('data-i18n-nav');
+      if (strings[key]) els[i].textContent = strings[key];
+    }
+
+    // Update flag
+    var flagEl = document.getElementById('nav-lang-flag');
+    if (flagEl && FLAGS[lang]) flagEl.textContent = FLAGS[lang];
+
+    // Update active option
+    var options = document.querySelectorAll('.nav-lang-option');
+    for (var i = 0; i < options.length; i++) {
+      if (options[i].getAttribute('data-lang') === lang) {
+        options[i].classList.add('active');
+      } else {
+        options[i].classList.remove('active');
+      }
+    }
+  }
+
+  function init() {
+    var lang = getLang();
+    applyNavLang(lang);
+
+    // Toggle dropdown
+    var currentBtn = document.getElementById('nav-lang-current');
+    var dropdown = document.getElementById('nav-lang-dropdown');
+    if (currentBtn && dropdown) {
+      currentBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdown.classList.toggle('open');
+      });
+      document.addEventListener('click', function() {
+        dropdown.classList.remove('open');
+      });
+    }
+
+    // Option clicks
+    var options = document.querySelectorAll('.nav-lang-option');
+    for (var i = 0; i < options.length; i++) {
+      options[i].addEventListener('click', function() {
+        var newLang = this.getAttribute('data-lang');
+        try { localStorage.setItem('site-lang', newLang); } catch(e) {}
+        applyNavLang(newLang);
+        if (dropdown) dropdown.classList.remove('open');
+
+        // Also update page-level i18n if available (for index page)
+        if (typeof window.applyLang === 'function') {
+          window.applyLang(newLang);
+        }
+
+        var path = window.location.pathname;
+        // On article detail page: navigate to the same article in the new language
+        if (path.indexOf('/blog/') === 0 && path !== '/blog/') {
+          // Extract slug: /blog/kung-pao-chicken-en/ -> kung-pao-chicken-en
+          var slug = path.replace(/^\/blog\//, '').replace(/\/$/, '');
+          // Replace the language suffix (last segment after last hyphen)
+          var baseParts = slug.split('-');
+          var lastPart = baseParts[baseParts.length - 1];
+          // Check if last part is a known language code
+          if (SUPPORTED.indexOf(lastPart) !== -1) {
+            baseParts[baseParts.length - 1] = newLang;
+            var newSlug = baseParts.join('-');
+            window.location.href = '/blog/' + newSlug + '/';
+          } else {
+            // Fallback: append language suffix
+            window.location.href = '/blog/' + slug + '-' + newLang + '/';
+          }
+        } else if (path === '/blog' || path === '/blog/') {
+          // Blog list page: reload to re-filter
+          window.location.reload();
+        }
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
